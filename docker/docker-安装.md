@@ -24,8 +24,8 @@
                   docker-engine`
 4. 安装需要的软件包
     + `$ sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2`
+                                device-mapper-persistent-data \
+                                lvm2`
 5. 设置 stable 镜像仓库 (选择其中一个执行)
     + 官网下载 (不推荐)
         + `$ sudo yum-config-manager \
@@ -45,9 +45,10 @@
     + `$ docker run hello-world`
 10. 配置镜像加速
     1. `mkdir -p /etc/docker`
-    2. `vim /etc/docker/daemon.json`
-        1. 网易云 `{"registry-mirrors":["http://hub-mirror.c.163.com"]}`
-        2. 阿里云 `{"registry-mirrors":["https://自己的编码.mirror.aliyuncs.com"]}`
+    2. `vim /etc/docker/daemon.json` (任选其一)
+        + 网易云 `{"registry-mirrors":["http://hub-mirror.c.163.com"]}`
+        + 阿里云 `{"registry-mirrors":["https://自己的编码.mirror.aliyuncs.com"]}`
+            + 进入阿里云控制台-> 产品与服务 搜索 容器镜像服务 -> 镜像加速器 `https://2sdjfmgq.mirror.aliyuncs.com`
     3. 重新加载配置 `systemctl daemon-reload`
     4. 重启 docker `systemctl restart docker`
 11. 卸载
