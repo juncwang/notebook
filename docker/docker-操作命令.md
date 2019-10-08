@@ -1,3 +1,13 @@
++ IMAGE 镜像模板:版本号(latest 表示最新版本-可省略)
++ CONTAINER_ID 容器id
++ OPTIONS 可选参数
++ COMMAND 启动执行命令
++ ARG... 传入参数
++ hostPort 本机端口
++ containerPort 容器端口
++ CONTAINER_PATH 容器目录文件
++ HOST_PATH 本机目录
+
 ### 帮助命令
 
 ##### docker version 
@@ -11,10 +21,6 @@
 
 
 ### 镜像命令
-+ IMAGE 镜像模板:版本号(latest 表示最新版本-可省略)
-+ OPTIONS 可选参数
-+ COMMAND 启动执行命令
-+ ARG... 传入参数
 
 ##### docker images [OPTIONS]
 + 查看本地有哪些镜像模板
@@ -41,6 +47,12 @@
             + 删除多个 -f 镜像名称1:版本号 镜像名称2:版本号 
             + 删除全部 -f $(docker images -qa)
 
+##### docker commit [OPTIONS] CONTAINER_ID 需要创建的目标镜像名:[标签名]
++ 提交容器副本使之成为一个新的镜像
+    + OPTIONS
+        + -m="提交的描述信息" 
+        + -a="作者"
+
 
 ### 容器命令
 
@@ -61,7 +73,8 @@
             + containerPort
         + --name strName 为创建的容器命名为 strName, 不命名系统会随机生成一个名字
     + COMMAND
-        + `/bin/sh -c "while true;do echo hello zzyy;sleep 2;done"` 启动后执行脚本
+        + `/bin/bash` 进入容器默认文件路径
+        + `/bin/sh -c "需要执行的脚步语言"` 启动后执行脚本
 
 ##### docker ps [OPTIONS] 
 + 查看当前正在运行的容器
