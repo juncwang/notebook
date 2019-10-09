@@ -1,6 +1,9 @@
 ### 系统命令
 + OPTIONS 可选参数
 
+##### tar -zxvf 解压文件名
++ 解压 .tar.gz 文件
+
 ##### ps [OPTIONS] 
 + 查看当前正在运行的进程
     + OPTIONS
