@@ -53,6 +53,15 @@
         + -m="提交的描述信息" 
         + -a="作者"
 
+##### docker build [OPTIONS] .
++ 使用 DockerFile 文件生成镜像文件, 最后添加一个点 代表在当前路径下查找
+    + OPTIONS
+        + -f /DockerfilePath 指定 DockerFile 位置
+        + -t imageName 指定生成后的镜像文件名称
+        + --privileged=true 添加权限
+
+##### docker history IMAGE_ID
++ 列镜像创建的历史
 
 ### 容器命令
 
@@ -75,7 +84,10 @@
             + hostPort:containerPort (常用)
             + containerPort
         + --name strName 为创建的容器命名为 strName, 不命名系统会随机生成一个名字
+        + --volumes-from CONTAINER_ID 挂载数据继承自 CONTAINER_ID
+        
     + COMMAND
+        + `ls /` 使用 linux 命令
         + `/bin/bash` 进入容器默认文件路径
         + `/bin/sh -c "需要执行的脚步语言"` 启动后执行脚本
 
@@ -118,6 +130,7 @@
 
 ##### docker inspect CONTAINER_ID
 + 查看容器内部细节
++ 内容有默认的挂载硬盘位置 Volume , 如果 DockerFile 有挂载
 
 ##### docker exec [OPTIONS] CONTAINER_ID [COMMAND] [ARG...]
 + 进入正在运行的容器并以命令行进行交互
