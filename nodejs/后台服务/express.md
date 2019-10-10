@@ -10,6 +10,11 @@ const express = require('express')
 // 实例话一个 express 项目
 const app = express()
 
+// 使用后就可以在 router 内解析 body 的内容 `req.body` 
+// 暂时未使用过
+app.use(express.urlencoded({extended: false, limit: '100mb'}))
+app.use(express.json(limit: '100mb'))
+
 // 初始化端口
 const port = process.env.PORT || 5000
 
