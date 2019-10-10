@@ -83,6 +83,7 @@
             + ip::containerPort
             + hostPort:containerPort (常用)
             + containerPort
+        + -e MYSQL_ROOT_PASSWORD=123456 初始化 root 用户的密码 ( mysql )
         + --name strName 为创建的容器命名为 strName, 不命名系统会随机生成一个名字
         + --volumes-from CONTAINER_ID 挂载数据继承自 CONTAINER_ID
         
@@ -136,7 +137,9 @@
 + 进入正在运行的容器并以命令行进行交互
 + 在容器中打开新的终端, 并且可以启动新的进程
     + OPTIONS COMMAND ARG...
-        + 与 `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]` 基本一致
+        + 与 `docker run` 基本一致
+            + `dcoker exec CONTAINER_ID sh -c 'exec mysqldump --all-databases -uroot -p"123456"' > /HOST_PATH/all-databases.sql`
+            - 把运行中的 mysql 数据中的数据导出到本机上
 
 ##### docker attach CONTAINER_ID
 + 进入正在运行的容器并以命令行进行交互

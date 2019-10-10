@@ -48,10 +48,17 @@
     2. `vim /etc/docker/daemon.json` (任选其一)
         + 网易云 `{"registry-mirrors":["http://hub-mirror.c.163.com"]}`
         + 阿里云 `{"registry-mirrors":["https://自己的编码.mirror.aliyuncs.com"]}`
-            + 进入阿里云控制台-> 产品与服务 搜索 容器镜像服务 -> 镜像加速器 `https://2sdjfmgq.mirror.aliyuncs.com`
+            + 进入阿里云控制台-> 产品与服务 搜索 容器镜像服务 -> 镜像加速器 `https://owdnpjmk.mirror.aliyuncs.com`
     3. 重新加载配置 `systemctl daemon-reload`
     4. 重启 docker `systemctl restart docker`
 11. 卸载
     1. 停止 docker `systemctl stop docker`
     2. 卸载 docker `$ sudo yum remove docker-ce`
     3. 删除 docker `$ sudo rm -rf /var/lib/docker`
+
+12. 把本地镜像推送到 阿里云 仓库
+```js
+$ sudo docker login --username=juncwang_2019 registry.cn-chengdu.aliyuncs.com
+$ sudo docker tag [ImageId] registry.cn-chengdu.aliyuncs.com/juncwang_2019/docker:[镜像版本号]
+$ sudo docker push registry.cn-chengdu.aliyuncs.com/juncwang_2019/docker:[镜像版本号]
+```
