@@ -83,3 +83,38 @@
 
 + `$ git merge <需要合并的分支名称>`
     + 把需要合并的分支合并到先在的分支上
++ `$ git merge origin/master`
+    + 把远程的 master 分支合并到本地
+
+
+### 远程仓库控制
+
++ `$ git remote -v`
+    + 查看远程仓库
++ `$ git remote add origin https://url.com`
+    + 添加一个远程仓库的连接并且别名叫 origin
+
++ `$ git clone https://url.com`
+    + 把远程仓库文件克隆到本地
+
++ `$ git pull origin master`
+    + 把远程仓库的 master 分支拉取到本地, 并调整暂存区及工作区
+    + 等同于余下两部操作
+        1. `$ git fetch origin master`
+        2. `$ git merge origin/master`
+
++ `$ git fetch origin master`
+    + 把远程仓库的 master 分支拉取到本地
+
++ `$ git push origin master`
+    + 把本地仓库推送到 origin 远程仓库连接的 master 分支
+
+
+### SSH 配置
+
+1. 打开终端运行 $ cd ~/.ssh
+2. 生成SSH KEY $ ssh-keygen -t rsa -C juncwang@live.com
+3. 连续按下回车键进行生成
+4. 打开终端运行 $ open ~/.ssh
+5. 查看 id_rsa.pub 的内容并进行复制
+6. 登陆 GitHub 进入个人设置内添加 SSH KEY
