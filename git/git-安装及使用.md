@@ -3,6 +3,9 @@
     + windows 需要下载 .exe 文件进行安装
     + mac linux 自带 git
 
++ `$ git help 命令名称`
+    + 查看命令的帮助信息
+
 ### 本地库初始化
 
 + `$ git init` 
@@ -36,9 +39,24 @@
             + -a
 
 
+### 版本控制
 
++ `$ git log [options]`
+    + 查看仓库版本记录
+        + options
+            + --pretty=oneline 单行显示完整版本信息
+            + --oneline 单行显示版本信息 (hash部分显示)
 
++ `$ git reflog`
+    + 查看仓库版本信息, 并显示版本指针指向, 回到哪个版本需要移动多少步
 
++ `$ git reset [options]`
+    + 选择仓库版本 -- 移动版本指针
+        + --hard [hash] 通过 `$ git reflog` 索引进行移动, 移动本地库, 暂存区, 工作区
+        + --hard HEAD^ 版本往后退一步, 一个 ^ 返回一步, 可以直接添加多个 ^
+        + --hard HEAD~num 版本往后退 num 步
+        + --soft 只会移动本地库 HEAD 指针, 操作同上 --hard
+        + --mixed 在本地库移动 HEAD 指针, 重置暂存区, 操作同上 --hard
 
 + `$ git checkout -- <file>`
     + 把文件从仓库内去除

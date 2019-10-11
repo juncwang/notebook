@@ -50,8 +50,8 @@
 ##### docker commit [OPTIONS] CONTAINER_ID 需要创建的目标镜像名:[标签名]
 + 提交容器副本使之成为一个新的镜像
     + OPTIONS
-        + -m="提交的描述信息" 
-        + -a="作者"
+        + -m "提交的描述信息" 
+        + -a "作者"
 
 ##### docker build [OPTIONS] .
 + 使用 DockerFile 文件生成镜像文件, 最后添加一个点 代表在当前路径下查找
