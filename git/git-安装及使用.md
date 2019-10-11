@@ -6,6 +6,7 @@
 + `$ git help 命令名称`
     + 查看命令的帮助信息
 
+
 ### 本地库初始化
 
 + `$ git init` 
@@ -18,6 +19,7 @@
     + 如果项目内设置了项目级别用户, 默认会使用项目级别用户信息进行上传资料
     + options
         + --global 不加参数为项目级别用户, 带此参数为全局级别用户
+
 
 ### 基础操作
 
@@ -61,11 +63,23 @@
         + --soft 只会移动本地库 HEAD 指针, 操作同上 --hard
         + --mixed 在本地库移动 HEAD 指针, 重置暂存区, 操作同上 --hard
 
-+ `$ git diff <file>`
++ `$ git diff [options] <file>`
     + 显示文件差异
+        + HEAD file 与本地库进行比较
+        + HEAD^ file 与后退一步的版本进行比较
+        + HEAD~num file 与后退 num 步的版本进行比较
 
 
+### 分支控制
 
++ `$ git branch [options]`
+    + 查看本项目分支
+        + options 
+            + -v 查看本项目所有分支
+            + `分支名称` 创建一个新的分支
 
-+ `$ git checkout -- <file>`
-    + 把文件从仓库内去除
++ `$ git checkout <分支名称>`
+    + 切换分支
+
++ `$ git merge <需要合并的分支名称>`
+    + 把需要合并的分支合并到先在的分支上
