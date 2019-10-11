@@ -31,6 +31,9 @@
 + `$ git rm --cached <file>`
     + 将放入本地暂存区的文件从暂存区去除
 
++ `$ git reset HEAD <file>`
+    + 撤销放入暂存区的文件
+
 + `$ git commit [options] <file>`
     + 提交代码到本地仓库内, 默认使用 vim 编辑器编辑文件描述内容
     + 不写 file 表示提交所有暂存区文件
@@ -58,8 +61,11 @@
         + --soft 只会移动本地库 HEAD 指针, 操作同上 --hard
         + --mixed 在本地库移动 HEAD 指针, 重置暂存区, 操作同上 --hard
 
++ `$ git diff <file>`
+    + 显示文件差异
+
+
+
+
 + `$ git checkout -- <file>`
     + 把文件从仓库内去除
-
-+ `$ git reset HEAD <file>`
-    + 
