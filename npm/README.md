@@ -39,11 +39,13 @@
     * `body-parser` 解析 body 的工具
     * `connect-multiparty` 上传文件
     * `exceljs` 表格创建
+    * `xml2js` 将 xml 转为 js 对象
     
 * 加密
     * `jsonwebtoken` 生成解析token
     * `jwt-decode` 解析 token
     * `md5` 字符串加密
+    * `sha1` 字符串加密
 
 * 数据库
     * `mongoose` 链接 `mongoDB` 数据库使用
