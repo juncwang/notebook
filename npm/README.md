@@ -40,6 +40,7 @@
     * `connect-multiparty` 上传文件
     * `exceljs` 表格创建
     * `xml2js` 将 xml 转为 js 对象
+    * `nodejs-websocket` 后台使用 websocket 
     
 * 后台页面
     * `ejs` ejs 框架
@@ -72,6 +73,7 @@
         * `WebSocket` 实时通信
             * 初始化 websocket `var ws = new WebSocket('ws:url')`
             * 服务器连接成功事件 `ws.onopen = () => { ... ... }`
+            * 向服务器发送数据 `ws.send(data)` data 是需要发送的数据
             * 服务器接收数据事件 `ws.onmessage = (e) => { ... ... }` e.data 是服务器返回的数据
             * 服务器关闭事件 `ws.onclose = () => { ... ... }`
         * `navigator.mediaDevices.getUserMedia(constranints)` 打开摄像头及录音
