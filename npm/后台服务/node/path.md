@@ -11,7 +11,11 @@
 2	path.join([path1][, path2][, ...])
 用于连接路径。该方法的主要用途在于，会正确使用当前系统的路径分隔符，Unix系统是"/"，Windows系统是"\"。
 3	path.resolve([from ...], to)
-将 to 参数解析为绝对路径，给定的路径的序列是从右往左被处理的，后面每个 path 被依次解析，直到构造完成一个绝对路径。 例如，给定的路径片段的序列为：/foo、/bar、baz，则调用 path.resolve('/foo', '/bar', 'baz') 会返回 /bar/baz。
+将 to 参数解析为绝对路径，给定的路径的序列是从右往左被处理的，后面每个 path 被依次解析，直到构造完成一个绝对路径。
+
+常用例子 `path.resolve(__dirname, fileName)` 返回当前文件 fileName 的绝对路径
+
+例如，给定的路径片段的序列为：/foo、/bar、baz，则调用 path.resolve('/foo', '/bar', 'baz') 会返回 /bar/baz。
 path.resolve('/foo/bar', './baz');
 // 返回: '/foo/bar/baz'
 

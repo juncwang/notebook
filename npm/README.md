@@ -41,6 +41,9 @@
     * `exceljs` 表格创建
     * `xml2js` 将 xml 转为 js 对象
     
+* 后台页面
+    * `ejs` ejs 框架
+    
 * 加密
     * `jsonwebtoken` 生成解析token
     * `jwt-decode` 解析 token
