@@ -1,12 +1,11 @@
 ### 概述
-+ unsafe 包含有关于Go程序类型安全的所有操作.
++ unsafe包提供了一些跳过go语言类型安全限制的操作。
 
 ### 索引
 
-+ `func Sizeof`
++ `func Sizeof(v ArbitraryType) uintptr`
 
 ### 说明
 
-+ `func Sizeof`
-    + `func Sizeof(v ArbitraryType) uintptr`
-    + Sizeof 返回被值 v 所占用的字节大小.该大小只是最"顶"的值.例如,若 v 是一个切片,它会返回该切片描述符的大小,而非该切片引用的内存大小
++ `func Sizeof(v ArbitraryType) uintptr`
+    + Sizeof返回类型v本身数据所占用的字节数。返回值是“顶层”的数据占有的字节数。例如，若v是一个切片，它会返回该切片描述符的大小，而非该切片底层引用的内存的大小

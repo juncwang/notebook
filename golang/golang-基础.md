@@ -3,6 +3,7 @@
 + `https://golang.google.cn/dl/` 下载地址
 + `https://tour.go-zh.org/basics/1` 官方教程
 + `https://go-zh.org/pkg/` 中文文档
++ `https://studygolang.com/pkgdoc` 中文文档
 
 ### 配置
 
