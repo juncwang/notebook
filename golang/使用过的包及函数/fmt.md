@@ -51,14 +51,18 @@
 + `func Printf(format string, a ...interface{}) (n int, err error)`
 + `func Println(a ...interface{}) (n int, err error)`
 + `func Sprint(a ...interface{}) string`
++ `func Scanf(format string, a ...interface{}) (n int, err error)`
++ `func Scanln(a ...interface{}) (n int, err error)`
 
 ### 说明
 
 + `func Printf(format string, a ...interface{}) (n int, err error)`
     + Printf根据format参数生成格式化的字符串并写入标准输出。返回写入的字节数和遇到的任何错误
-
 + `func Println(a ...interface{}) (n int, err error)`
     + Println采用默认格式将其参数格式化并写入标准输出。总是会在相邻参数的输出之间添加空格并在输出结束后添加换行符。返回写入的字节数和遇到的任何错误
-
 + `func Sprint(a ...interface{}) string`
     + Sprintf根据format参数生成格式化的字符串并返回该字符串
++ `func Scanf(format string, a ...interface{}) (n int, err error)`
+    + Scanf从标准输入扫描文本，根据format 参数指定的格式将成功读取的空白分隔的值保存进成功传递给本函数的参数。返回成功扫描的条目个数和遇到的任何错误
++ `func Scanln(a ...interface{}) (n int, err error)`
+    + Scanln类似Scan，但会在换行时才停止扫描。最后一个条目后必须有换行或者到达结束位置
