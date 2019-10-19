@@ -69,3 +69,5 @@ exprot GOPATH=$HOME/goProject
 + recover() err // 用来做错误处理, 不终段程序仅把错误返回
 + []rune(str string) []byte // 把字符串转换成 byte 数组(主要用于长度大于1的文字)
 + string(变量) string // 强制转换为 string 类型
+
++ uintprt ?
