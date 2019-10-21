@@ -71,3 +71,39 @@ exprot GOPATH=$HOME/goProject
 + string(变量) string // 强制转换为 string 类型
 
 + uintprt ?
+
+### break, continue, goto, return
+
+1. break
+    + break 默认会跳出最近的 for 循环
+    + break 后面可以指定标签, 跳出标签对应的 for 循环
+
+```go
+lable:
+for i := 0; i < 9; i++ {
+    for j := 0; j < 9; j++ {
+        // break 跳出最近的 for 循环
+        // break lable 跳出有 lable: 标签的 for 循环
+    }
+}
+```
+
+2. continue
+    + continue 语句用于结束本地循环, 继续执行下一次循环
+    + continue 语句出现在多层嵌套的循环语句体中时, 可以通过标签指明要跳过的是哪一层循环, 这个和签名的 break 标签的使用规则一样
+
+3. goto
+    + Go 语言的 goto 语句可以无条件地转移到程序中指定的行
+    + goto 语句通常与条件语句配合使用. 可以用来实现条件转移, 跳出循环体等功能.
+    + 在 Go 语言设计中一般不主张使用 goto 语句, 以免造成程序流程的混乱, 使理解和调试程序都产生困难
+
+```go
+fmt.Println("程序开始输出")
+goto label
+fmt.Println("因为 goto 语句不会被输出")
+label:
+fmt.Println("goto 语句跳至 label 后继续输出")
+```
+
+4. return
+    + return 使用在方法或函数中, 表示跳出所在的方法或函数
