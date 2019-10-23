@@ -13,14 +13,14 @@
 // 只需要引入 request-promise-native
 const rp = require('request-promise-native')
 
-rp{(
+rp({
         method: 'GET',          // 请求的方法
         uri: url,               // 请求的地址?
         url: url,               // 请求的地址?
         qs: {test:'123'},       // get 请求数据 ?test=123
         body: {some: 'payload'} // post 请求数据
         form: {name: 'Josh'},   // post http form 类型请求数据
-        formData: {             // 上次文件
+        formData: {             // 上传文件
             name: 'Jenn',
             file: {
             value: fs.createReadStream('test/test.jpg'),
@@ -32,7 +32,7 @@ rp{(
         },
         json: true              // 请求数据的形式
         headers: {'User-Agent':'Request-Promise'} // 请求头
-)}
+})
     .then( res => {             // 请求成功返回 res
         console.log(res)
     })

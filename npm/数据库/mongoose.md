@@ -57,7 +57,7 @@ const mongoose = require('mongoose')
 // 定义链接地址
 const mongoURI = 'mongodb://数据库管理员账户:密码@127.0.0.1:27017/表名?authSource=admin'
 // 链接数据库
-mongoose.connect(mongoURI, { useNewUrlParser: true })
+mongoose.connect(mongoURI, { useUnifiedTopology: true, useNewUrlParser: true })
     .then(() => console.log("MongoDB Connect Success"))
     .catch((err) => console.log(`MongoDB Connect Failure ${err}`))
 ```
