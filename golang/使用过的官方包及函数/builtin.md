@@ -8,6 +8,7 @@
 + `type string string`
 + `func new(Type) *Type`
 + `func make(Type, size IntegerType) Type`
++ `func cap(v Type) int`
 + `func len(v Type) int`
 + `func close(c chan<- Type)`
 + `func panic(v interface{})`
@@ -32,6 +33,14 @@
     映射：初始分配的创建取决于size，但产生的映射长度为0。size可以省略，这种情况下就会分配一个
      小的起始大小。
     通道：通道的缓存根据指定的缓存容量初始化。若 size为零或被省略，该信道即为无缓存的。
+    ```
++ `func cap(v Type) int`
+    + 内建函数cap返回 v 的容量，这取决于具体类型：
+    ```
+    数组：v中元素的数量，与 len(v) 相同
+    数组指针：*v中元素的数量，与len(v) 相同
+    切片：切片的容量（底层数组的长度）；若 v为nil，cap(v) 即为零
+    信道：按照元素的单元，相应信道缓存的容量；若v为nil，cap(v)即为零
     ```
 + `func len(v Type) int`
     + 内建函数len返回 v 的长度
