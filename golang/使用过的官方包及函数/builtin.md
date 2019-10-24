@@ -10,6 +10,7 @@
 + `func make(Type, size IntegerType) Type`
 + `func cap(v Type) int`
 + `func len(v Type) int`
+* `func append(slice []Type, elems ...Type) []Type`
 + `func close(c chan<- Type)`
 + `func panic(v interface{})`
 + `func recover() interface{}`
@@ -51,6 +52,16 @@
     切片、映射：v中元素的数量；若v为nil，len(v)即为零
     字符串：v中字节的数量
     通道：通道缓存中队列（未读取）元素的数量；若v为 nil，len(v)即为零
+    ```
+* `func append(slice []Type, elems ...Type) []Type`
+    + 内建函数append将元素追加到切片的末尾。若它有足够的容量，其目标就会重新切片以容纳新的元素。否则，就会分配一个新的基本数组。append返回更新后的切片，因此必须存储追加后的结果。
+    ```
+    slice = append(slice, elem1, elem2)
+    slice = append(slice, anotherSlice...)
+    ```
+    + 作为特例，可以向一个字节切片append字符串，如下：
+    ```
+    slice = append([]byte("hello "), "world"...)
     ```
 + `func close(c chan<- Type)`
     + 内建函数close关闭信道，该通道必须为双向的或只发送的。它应当只由发送者执行，而不应由接收者执行，其效果是在最后发送的值被接收后停止该通道。在最后的值从已关闭的信道中被接收后，任何对其的接收操作都会无阻塞的成功。
