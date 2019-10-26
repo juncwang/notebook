@@ -11,6 +11,8 @@
 + `func cap(v Type) int`
 + `func len(v Type) int`
 * `func append(slice []Type, elems ...Type) []Type`
++ `func copy(dst, src []Type) int`
++ `func delete(m map[Type]Type1, key Type)`
 + `func close(c chan<- Type)`
 + `func panic(v interface{})`
 + `func recover() interface{}`
@@ -63,6 +65,10 @@
     ```
     slice = append([]byte("hello "), "world"...)
     ```
++ `func copy(dst, src []Type) int`
+    + 内建函数copy将元素从来源切片复制到目标切片中，也能将字节从字符串复制到字节切片中。copy返回被复制的元素数量，它会是 len(src) 和 len(dst) 中较小的那个。来源和目标的底层内存可以重叠。
++ `func delete(m map[Type]Type1, key Type)`
+    + 内建函数delete按照指定的键将元素从映射中删除。若m为nil或无此元素，delete不进行操作。
 + `func close(c chan<- Type)`
     + 内建函数close关闭信道，该通道必须为双向的或只发送的。它应当只由发送者执行，而不应由接收者执行，其效果是在最后发送的值被接收后停止该通道。在最后的值从已关闭的信道中被接收后，任何对其的接收操作都会无阻塞的成功。
     + 对于已关闭的信道，语句：
