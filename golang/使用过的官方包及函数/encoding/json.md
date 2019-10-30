@@ -4,6 +4,7 @@
 ### 索引
 
 + `func Marshal(v interface{}) ([]byte, error)`
++ `func Unmarshal(data []byte, v interface{}) error`
  
 ### 说明
 
@@ -30,3 +31,15 @@
         3. 其余字段中如果只有一个匿名字段，则使用该字段；
         4. 其余字段中如果有多个匿名字段，但压平后不会出现冲突，所有匿名字段压平；
         5. 其余字段中如果有多个匿名字段，但压平后出现冲突，全部忽略，不产生错误。
+
++ `func Unmarshal(data []byte, v interface{}) error`
+    + Unmarshal函数解析json编码的数据并将结果存入v指向的值。
+    + 要将json数据解码写入一个接口类型值，函数会将数据解码为如下类型写入接口：
+    ```
+    Bool                   对应JSON布尔类型
+    float64                对应JSON数字类型
+    string                 对应JSON字符串类型
+    []interface{}          对应JSON数组
+    map[string]interface{} 对应JSON对象
+    nil                    对应JSON的null
+    ```
