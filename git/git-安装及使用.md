@@ -115,6 +115,5 @@
 1. 打开终端运行 $ cd ~/.ssh
 2. 生成SSH KEY $ ssh-keygen -t rsa -C juncwang@live.com
 3. 连续按下回车键进行生成
-4. 打开终端运行 $ open ~/.ssh
-5. 查看 id_rsa.pub 的内容并进行复制
-6. 登陆 GitHub 进入个人设置内添加 SSH KEY
+4. 执行 SSH KEY $ cat ~/.ssh/id_rsa.pub 查看生成内容并进行复制
+5. 登陆 GitHub 进入个人设置内添加 SSH KEY
