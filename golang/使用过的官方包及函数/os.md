@@ -6,10 +6,13 @@
 
 + `type File`
     + `func Open(name string) (file *File, err error)`
+    + `func (f *File) Close() error`
 
 ### 说明
 
 + `type File`
     + File代表一个打开的文件对象。
-+ `func Open(name string) (file *File, err error)`
-    + Open打开一个文件用于读取。如果操作成功，返回的文件对象的方法可用于读取数据；对应的文件描述符具有O_RDONLY模式。如果出错，错误底层类型是*PathError。
+    + `func Open(name string) (file *File, err error)`
+        + Open打开一个文件用于读取。如果操作成功，返回的文件对象的方法可用于读取数据；对应的文件描述符具有O_RDONLY模式。如果出错，错误底层类型是*PathError。
+    + `func (f *File) Close() error`
+        + Close关闭文件f，使文件不能用于读写。它返回可能出现的错误。
