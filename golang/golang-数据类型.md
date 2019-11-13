@@ -28,11 +28,11 @@
 1. 指针 pointer
 2. 数组
 3. 结构体 struct
-4. 管道 channel
+4. 管道 channel `make(chan type, num)`
 5. 函数 func
-6. 切片 slice
+6. 切片 slice `make([]type, num)`
 7. 接口 interface
-8. map
+8. map `make(map[string]int, num)`
 
 ### 基本数据类型转换
 
