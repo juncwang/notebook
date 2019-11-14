@@ -6,6 +6,10 @@
 + `type Kind uint`
     + `func (k Kind) String() string`
 
++ `type StructField struct`
+    + `type StructTag string`
+        + `func (tag StructTag) Get(key string) string`
+
 + `type Type interface{}`
     + `func TypeOf(i interface{}) Type`
 
@@ -13,7 +17,35 @@
     + `func ValueOf(i interface{}) Value`
     + `func (v Value) Interface() (i interface{})`
     + `func (v Value) Kind() Kind`
+    + `func (v Value) Bool() bool`
     + `func (v Value) Int() int64`
+    + `func (v Value) Uint() uint64`
+    + `func (v Value) Float() float64`
+    + `func (v Value) Complex() complex128`
+    + `func (v Value) Bytes() []byte`
+    + `func (v Value) String() string`
+    + `func (v Value) Slice(i, j int) Value`
+    + `func (v Value) Pointer() uintptr`
+    + `func (v Value) Cap() int`
+    + `func (v Value) Len() int`
+    + `func (v Value) Elem() Value`
+    + `func (v Value) SetBool(x bool)`
+    + `func (v Value) SetInt(x int64)`
+    + `func (v Value) SetUint(x uint64)`
+    + `func (v Value) SetFloat(x float64)`
+    + `func (v Value) SetComplex(x complex128)`
+    + `func (v Value) SetBytes(x []byte)`
+    + `func (v Value) SetString(x string)`
+    + `func (v Value) SetPointer(x unsafe.Pointer)`
+    + `func (v Value) SetCap(n int)`
+    + `func (v Value) SetLen(n int)`
+    + `func (v Value) SetMapIndex(key, val Value)`
+    + `func (v Value) Set(x Value)`
+    + `func (v Value) NumField() int`
+    + `func (v Value) Field(i int) Value`
+    + `func (v Value) NumMethod() int`
+    + `func (v Value) Method(i int) Value`
+    + `func (v Value) Call(in []Value) []Value`
 
 ### 说明
 
@@ -53,6 +85,29 @@
 
     + `func (k Kind) String() string`
         + 返回类型名的字符串
+
++ `type StructField struct`
+    ```go
+    type StructField struct {
+        // Name是字段的名字。PkgPath是非导出字段的包路径，对导出字段该字段为""。
+        // 参见http://golang.org/ref/spec#Uniqueness_of_identifiers
+        Name    string
+        PkgPath string
+        Type      Type      // 字段的类型
+        Tag       StructTag // 字段的标签
+        Offset    uintptr   // 字段在结构体中的字节偏移量
+        Index     []int     // 用于Type.FieldByIndex时的索引切片
+        Anonymous bool      // 是否匿名字段
+    }
+    ```
+    + StructField类型描述结构体中的一个字段的信息
+
+    + `type StructTag string`
+        + StructTag是结构体字段的标签。
+        + 一般来说，标签字符串是（可选的）空格分隔的一连串`key:"value"`对。每个键都是不包含控制字符、空格、双引号、冒号的非空字符串。每个值都应被双引号括起来，使用go字符串字面语法
+
+        + `func (tag StructTag) Get(key string) string`
+            + Get方法返回标签字符串中键key对应的值。如果标签中没有该键，会返回""。如果标签不符合标准格式，Get的返回值是不确定的
 
 + `type Type`
     ```go
@@ -148,5 +203,66 @@
         + 如果v是通过访问非导出结构体字段获取的，会导致panic
     + `func (v Value) Kind() Kind`
         + Kind返回v持有的值的分类，如果v是Value零值，返回值为Invalid
+    + `func (v Value) Bytes() []byte`
+        + 返回v持有的[]byte类型值。如果v持有的值的类型不是[]byte会panic
+    + `func (v Value) String() string`
+        + 返回v持有的值的字符串表示。因为go的String方法的惯例，Value的String方法比较特别。和其他获取v持有值的方法不同：v的Kind是String时，返回该字符串；v的Kind不是String时也不会panic而是返回格式为"<T value>"的字符串，其中T是v持有值的类型
+    + `func (v Value) Bool() bool`
+        + 返回v持有的布尔值，如果v的Kind不是Bool会panic
     + `func (v Value) Int() int64`
         + 返回v持有的有符号整数（表示为int64），如果v的Kind不是Int、Int8、Int16、Int32、Int64会panic
+    + `func (v Value) Uint() uint64`
+        + 返回v持有的无符号整数（表示为uint64），如v的Kind不是Uint、Uintptr、Uint8、Uint16、Uint32、Uint64会panic
+    + `func (v Value) Float() float64`
+        + 返回v持有的浮点数（表示为float64），如果v的Kind不是Float32、Float64会panic
+    + `func (v Value) Complex() complex128`
+        + 返回v持有的复数（表示为complex64），如果v的Kind不是Complex64、Complex128会panic
+    + `func (v Value) Slice(i, j int) Value`
+        + 返回v[i:j]（v持有的切片的子切片的Value封装）；如果v的Kind不是Array、Slice或String会panic。如果v是一个不可寻址的数组，或者索引出界，也会panic
+    + `func (v Value) Pointer() uintptr`
+        + 将v持有的值作为一个指针返回。本方法返回值不是unsafe.Pointer类型，以避免程序员不显式导入unsafe包却得到unsafe.Pointer类型表示的指针。如果v的Kind不是Chan、Func、Map、Ptr、Slice或UnsafePointer会panic。
+        + 如果v的Kind是Func，返回值是底层代码的指针，但并不足以用于区分不同的函数；只能保证当且仅当v持有函数类型零值nil时，返回值为0。
+        + 如果v的Kind是Slice，返回值是指向切片第一个元素的指针。如果持有的切片为nil，返回值为0；如果持有的切片没有元素但不是nil，返回值不会是0
+    + `func (v Value) Cap() int`
+        + 返回v持有值的容量，如果v的Kind不是Array、Chan、Slice会panic
+    + `func (v Value) Len() int`
+        + 返回v持有值的长度，如果v的Kind不是Array、Chan、Slice、Map、String会panic
+    + `func (v Value) Elem() Value`
+        + Elem返回v持有的接口保管的值的Value封装，或者v持有的指针指向的值的Value封装。如果v的Kind不是Interface或Ptr会panic；如果v持有的值为nil，会返回Value零值
+    + `func (v Value) SetBool(x bool)`
+        + 设置v的持有值。如果v的Kind不是Bool或者v.CanSet()返回假，会panic
+    + `func (v Value) SetInt(x int64)`
+        + 设置v的持有值。如果v的Kind不是Int、Int8、Int16、Int32、Int64之一或者v.CanSet()返回假，会panic
+    + `func (v Value) SetUint(x uint64)`
+        + 设置v的持有值。如果v的Kind不是Uint、Uintptr、Uint8、Uint16、Uint32、Uint64或者v.CanSet()返回假，会panic
+    + `func (v Value) SetFloat(x float64)`
+        + 设置v的持有值。如果v的Kind不是Float32、Float64或者v.CanSet()返回假，会panic
+    + `func (v Value) SetComplex(x complex128)`
+        + 设置v的持有值。如果v的Kind不是Complex64、Complex128或者v.CanSet()返回假，会panic
+    + `func (v Value) SetBytes(x []byte)`
+        + 设置v的持有值。如果v持有值不是[]byte类型或者v.CanSet()返回假，会panic
+    + `func (v Value) SetString(x string)`
+        + 设置v的持有值。如果v的Kind不是String或者v.CanSet()返回假，会panic
+    + `func (v Value) SetPointer(x unsafe.Pointer)`
+        + 设置v的持有值。如果v的Kind不是UnsafePointer或者v.CanSet()返回假，会panic
+    + `func (v Value) SetCap(n int)`
+        + 设定v持有值的容量。如果v的Kind不是Slice或者n出界（小于长度或超出容量），将导致panic
+    + `func (v Value) SetLen(n int)`
+        + 设定v持有值的长度。如果v的Kind不是Slice或者n出界（小于零或超出容量），将导致panic
+    + `func (v Value) SetMapIndex(key, val Value)`
+        + 用来给v的映射类型持有值添加/修改键值对，如果val是Value零值，则是删除键值对。如果v的Kind不是Map，或者v的持有值是nil，将会panic。key的持有值必须可以直接赋值给v持有值类型的键类型。val的持有值必须可以直接赋值给v持有值类型的值类型
+    + `func (v Value) Set(x Value)`
+        + 将v的持有值修改为x的持有值。如果v.CanSet()返回假，会panic。x的持有值必须能直接赋给v持有值的类型
+    + `func (v Value) NumField() int`
+        + 返回v持有的结构体类型值的字段数，如果v的Kind不是Struct会panic
+    + `func (v Value) Field(i int) Value`
+        + Value 内无法获取到 Tag 如果需要获取, 则使用 Type 内的 Field 方法 `rType.Field(n).Tag.Get(str)`
+        + 返回结构体的第i个字段（的Value封装）。如果v的Kind不是Struct或i出界会panic
+    + `func (v Value) NumMethod() int`
+        + 返回v持有值的方法集的方法数目
+    + `func (v Value) Method(i int) Value`
+        + 结构体方法调用顺序是按 `ASCII` 码形式进行排序, 不是按先后顺序进行排序
+        + 比如 `结构体有两个方法, 依次定义为 c() a(), 调用时根据 ASCII 顺序 Method(0)-> a(), Method(1)-> c()`
+        + 返回v持有值类型的第i个方法的已绑定（到v的持有值的）状态的函数形式的Value封装。返回值调用Call方法时不应包含接收者；返回值持有的函数总是使用v的持有者作为接收者（即第一个参数）。如果i出界，或者v的持有值是接口类型的零值（nil），会panic
+    + `func (v Value) Call(in []Value) []Value`
+        + Call方法使用输入的参数in调用v持有的函数。例如，如果len(in) == 3，v.Call(in)代表调用v(in[0], in[1], in[2])（其中Value值表示其持有值）。如果v的Kind不是Func会panic。它返回函数所有输出结果的Value封装的切片。和go代码一样，每一个输入实参的持有值都必须可以直接赋值给函数对应输入参数的类型。如果v持有值是可变参数函数，Call方法会自行创建一个代表可变参数的切片，将对应可变参数的值都拷贝到里面
