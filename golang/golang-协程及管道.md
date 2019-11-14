@@ -3,6 +3,8 @@
 + 开启协程的方式
     + `go FuncName()`
 
++ goroutine 中使用 recover, 解决协程中出现 panic 导致整个程序崩溃
+
 ### channel 管道
 
 1. channel 本质就是一个数据结构 - 队列
@@ -52,10 +54,59 @@ for v := range intChan {
 + channel 的线程保护
 ```go
 // channel 线程保护
-// 如果 channel 内没有值, 并且没有被关闭, 线程将被阻塞直到被关闭或读取到数据为止
+// 如果 channel 内没有值, 并且没有被关闭, 线程将被阻塞直到管道被关闭或读取到数据为止
 _, ok := <-exitChan
 // 判断 channel 是否关闭
 if !ok {
     // 如果关闭, 执行代码
+}
+```
+
++ channel 的读写声明
+```go
+// 1. 默认情况下, 管道是双向
+var chan1 chan int // 可读可写
+
+// 2. 声明为只写
+var chan2 chan<- int
+chan2 = make(chan int, 3)
+chan2<- 20
+// num := <- chan2 // error
+
+// 3. 声明为只读
+var chan3 <-chan int
+num2 := <-chan3
+// chan3<- 30 // error
+
+// 使用方法 ----------------
+
+// 只写定义
+func send(ch chan<- int) {
+    ch <- 10
+}
+
+func recv(ch <-chan int) {
+    num := <- ch
+}
+
+ch := make(chan int, 3)
+go send(ch)
+go recv(ch)
+```
+
++ channel select 解决管道数据阻塞问题
+```go
+for {
+    // 使用选择器来取管道数据
+    // 如果没有渠道 将继续执行下面 case 直到 default
+    select {
+        case v := <-intChan :
+            fmt.Println("intChan is num :", v)
+        case v := <-strChan :
+            fmt.Println("strChan is str :", v)
+        default:
+            fmt.Println("not data chan")
+            break
+    }
 }
 ```
