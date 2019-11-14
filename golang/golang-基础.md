@@ -107,3 +107,7 @@ fmt.Println("goto 语句跳至 label 后继续输出")
 
 4. return
     + return 使用在方法或函数中, 表示跳出所在的方法或函数
+
+5. 常量, 变量
+    + 常量使用 `const` 修饰
+    + 变量使用 `var` 修饰

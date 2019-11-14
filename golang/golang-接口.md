@@ -1,6 +1,17 @@
 ### type-switch 判断某个 interface 变量中的实际执行的变量类型
 
 ```go
+// 单个类型断言
+var x interface{}
+var y = 10.0
+x = y
+
+if v, ok := x.(float64); ok {
+    // 如果断言正确执行代码
+}
+
+
+// 多个类型判断
 var x interface{}
 var y = 10.0
 x = y
