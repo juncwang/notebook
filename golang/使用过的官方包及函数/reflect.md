@@ -15,6 +15,7 @@
 
 + `type Value struct`
     + `func ValueOf(i interface{}) Value`
+    + `func New(typ Type) Value`
     + `func (v Value) Interface() (i interface{})`
     + `func (v Value) Kind() Kind`
     + `func (v Value) Bool() bool`
@@ -43,8 +44,10 @@
     + `func (v Value) Set(x Value)`
     + `func (v Value) NumField() int`
     + `func (v Value) Field(i int) Value`
+    + `func (v Value) FieldByName(name string) Value`
     + `func (v Value) NumMethod() int`
     + `func (v Value) Method(i int) Value`
+    + `func (v Value) MethodByName(name string) Value`
     + `func (v Value) Call(in []Value) []Value`
 
 ### 说明
@@ -197,6 +200,8 @@
 
     + `func ValueOf(i interface{}) Value`
         + ValueOf返回一个初始化为i接口保管的具体值的Value，ValueOf(nil)返回Value零值
+    + `func New(typ Type) Value`
+        + New返回一个Value类型值，该值持有一个指向类型为typ的新申请的零值的指针，返回值的Type为PtrTo(typ)
     + `func (v Value) Interface() (i interface{})`
         + 本方法返回v当前持有的值（表示为/保管在interface{}类型），等价于：
         + `var i interface{} = (v's underlying value)`
@@ -258,11 +263,15 @@
     + `func (v Value) Field(i int) Value`
         + Value 内无法获取到 Tag 如果需要获取, 则使用 Type 内的 Field 方法 `rType.Field(n).Tag.Get(str)`
         + 返回结构体的第i个字段（的Value封装）。如果v的Kind不是Struct或i出界会panic
+    + `func (v Value) FieldByName(name string) Value`
+        + 返回该类型名为name的字段（的Value封装）（会查找匿名字段及其子字段），如果v的Kind不是Struct会panic；如果未找到会返回Value零值
     + `func (v Value) NumMethod() int`
         + 返回v持有值的方法集的方法数目
     + `func (v Value) Method(i int) Value`
         + 结构体方法调用顺序是按 `ASCII` 码形式进行排序, 不是按先后顺序进行排序
         + 比如 `结构体有两个方法, 依次定义为 c() a(), 调用时根据 ASCII 顺序 Method(0)-> a(), Method(1)-> c()`
         + 返回v持有值类型的第i个方法的已绑定（到v的持有值的）状态的函数形式的Value封装。返回值调用Call方法时不应包含接收者；返回值持有的函数总是使用v的持有者作为接收者（即第一个参数）。如果i出界，或者v的持有值是接口类型的零值（nil），会panic
+    + `func (v Value) MethodByName(name string) Value`
+        + 返回v的名为name的方法的已绑定（到v的持有值的）状态的函数形式的Value封装。返回值调用Call方法时不应包含接收者；返回值持有的函数总是使用v的持有者作为接收者（即第一个参数）。如果未找到该方法，会返回一个Value零值
     + `func (v Value) Call(in []Value) []Value`
         + Call方法使用输入的参数in调用v持有的函数。例如，如果len(in) == 3，v.Call(in)代表调用v(in[0], in[1], in[2])（其中Value值表示其持有值）。如果v的Kind不是Func会panic。它返回函数所有输出结果的Value封装的切片。和go代码一样，每一个输入实参的持有值都必须可以直接赋值给函数对应输入参数的类型。如果v持有值是可变参数函数，Call方法会自行创建一个代表可变参数的切片，将对应可变参数的值都拷贝到里面
