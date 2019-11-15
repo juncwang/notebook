@@ -34,6 +34,7 @@ func main()  {
 var pool *redis.Pool 
 
 func init()  {
+    // 创建一个链接池, 并配置参数
 	pool = &redis.Pool{
 		MaxIdle: 8, // 最大空闲链接数
 		MaxActive: 0, // 最大链接数, 0 表示没有限制
@@ -45,6 +46,7 @@ func init()  {
 }
 
 func main()  {
+    // 从链接池获取一个链接
 	conn := pool.Get()
 	defer conn.Close()
 
