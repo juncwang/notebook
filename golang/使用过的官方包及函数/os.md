@@ -10,6 +10,8 @@
 
 + `type FileMode uint32`
 
++ `func Exit(code int)`
+
 + `type FileInfo`
     + `func Stat(name string) (fi FileInfo, err error)`
 
@@ -82,6 +84,9 @@
         ModePerm FileMode = 0777 // 覆盖所有Unix权限位（用于通过&获取类型位）
     )
     ```
+
++ `func Exit(code int)`
+    + Exit让当前程序以给出的状态码code退出。一般来说，状态码0表示成功，非0表示出错。程序会立刻终止，defer的函数不会被执行
 
 + `type FileInfo`
     ```go
