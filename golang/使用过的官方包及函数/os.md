@@ -7,7 +7,6 @@
 + `Constants`
 
 + `Variables`
-    + `var Args []string`
 
 + `type FileMode uint32`
 
@@ -39,8 +38,27 @@
     ```
 
 + `Variables`
-    + `var Args []string`
-        + Args保管了命令行参数，第一个是程序名。
+    ```go
+    var (
+        ErrInvalid    = errors.New("invalid argument")
+        ErrPermission = errors.New("permission denied")
+        ErrExist      = errors.New("file already exists")
+        ErrNotExist   = errors.New("file does not exist")
+    )
+    ```
+    + 一些可移植的、共有的系统调用错误
+    ```go
+    var (
+        Stdin  = NewFile(uintptr(syscall.Stdin), "/dev/stdin")
+        Stdout = NewFile(uintptr(syscall.Stdout), "/dev/stdout")
+        Stderr = NewFile(uintptr(syscall.Stderr), "/dev/stderr")
+    )
+    ```
+    + Stdin、Stdout和Stderr是指向标准输入、标准输出、标准错误输出的文件描述符
+    ```go
+    var Args []string
+    ```
+    + Args保管了命令行参数，第一个是程序名。
 
 + `type FileMode uint32`
     + FileMode代表文件的模式和权限位。这些字位在所有的操作系统都有相同的含义，因此文件的信息可以在不同的操作系统之间安全的移植。不是所有的位都能用于所有的系统，唯一共有的是用于表示目录的ModeDir位。
