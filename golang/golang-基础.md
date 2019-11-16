@@ -21,7 +21,7 @@
 ```profile
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
-exprot GOPATH=$HOME/goProject
+export GOPATH=$HOME/goProject
 ```
 
 ### 关键字
