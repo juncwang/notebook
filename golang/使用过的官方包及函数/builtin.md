@@ -6,6 +6,7 @@
 + `type byte byte`
 + `type rune rune`
 + `type string string`
++ `type error interface`
 + `func new(Type) *Type`
 + `func make(Type, size IntegerType) Type`
 + `func cap(v Type) int`
@@ -25,6 +26,13 @@
     + 32位有符号整形，int32的别名，二者视为同一类型。
 + `type string string`
     + 8位byte序列构成的字符串，约定但不必须是utf-8编码的文本。字符串可以为空但不能是nil，其值不可变。
++ `type error interface`
+    ```go
+    type error interface {
+        Error() string
+    }
+    ```
+    + 内建error接口类型是约定用于表示错误信息，nil值表示无错误
 + `func new(Type) *Type`
     + 内建函数new分配内存。其第一个实参为类型，而非值。其返回值为指向该类型的新分配的零值的指针。
 + `func make(Type, size IntegerType) Type`
