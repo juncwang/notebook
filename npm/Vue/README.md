@@ -214,7 +214,7 @@ location / {
 08. vue 双向数据绑定 ref v-model
     * 必须使用在 `input select textarea` 标签
     * 利用标签 ref 及 v-model 实现双向绑定
-    * 第一种方式 ref
+    * 第一种方式 ref 
     ```html
     <div id="vue-app">
         <!-- 利用 ref 属性把内容传递给vuejs 当调用方法时进行修改值 -->
@@ -231,6 +231,7 @@ location / {
             logName:function(){
                 // 拿到传入的内容后进行赋值实现绑定
                 this.name = this.$refs.name.value
+                // 如果ref 是使用 v-for 的数组, 那么要获得内部元素需要 `this.$refs.array[i].$el`
             }
         }
     })
