@@ -52,6 +52,19 @@ module.exports = router
 const express = require('express')
 // 实例话一个 express 项目
 const app = express()
+// 跨域
+app.all('*',function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  
+    if (req.method == 'OPTIONS') {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+  });
 // 引入 router
 const router = require('./router/path')
 // 使用 router
