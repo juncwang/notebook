@@ -53,6 +53,10 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
+    // 设置宽度
+    width: 800,
+    // 设置高度
+    height: 600,
     // 全屏显示
     fullscreen: true,
     webPreferences: {
