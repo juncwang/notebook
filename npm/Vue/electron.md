@@ -11,6 +11,8 @@
     8. 打包项目 `npm run electron:builder`
         * 打包时可能遇到下载不了, 可以手动下载并放在 `C:\Users\用户\AppData\Local\electron-builder\Cache` 文件夹下
             * 主要有三个文件 `nsis, winCodeSign, winCodeSign-2.5.0`
+        * 有可能出现打包失败 需要手动删除 `C:\Users\86151\Desktop\smart-eco\dist_electron\win-unpacked\resources\app.asar`
+        * 有时候报错就 重新执行 第 7 部操作
 
 * 系统配置 `vue.config.js`
 ```js
