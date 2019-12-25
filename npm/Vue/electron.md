@@ -53,20 +53,31 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    // 设置宽度
-    width: 800,
-    // 设置高度
-    height: 600,
+    // 是否显示 默认为 true
+    // show：true,
+    // 背景颜色
+    // backgroundColor: '#ff6600',
     // 全屏显示
-    fullscreen: true,
+    // fullscreen: true,
+    // 无边框
+    // frame: false,
+    // 设置父窗口
+    // parent: top,
+    // 设置为模态窗口
+    // modal: true,
+    // 设置窗口出现的位置
+    // x: 0, y: 0,
     webPreferences: {
       // 取消跨域限制
-      webSecurity: false,
+      // webSecurity: false,
+      // 容许使用 webVview 标签
+      // webviewTag: true,
+      // 开启系统对象在渲染进程可用 * 重要
       nodeIntegration: true
     } })
 
-    // 设置取消左上角菜单 - 需要引入 Menu
-    Menu.setApplicationMenu(null)
+  // 设置取消左上角菜单 需要引入 Menu
+  // Menu.setApplicationMenu(null)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
