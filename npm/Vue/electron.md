@@ -7,7 +7,7 @@
     4. 系统将自动生成一个 `src/background.js` 文件
     5. 修改 `package.json` 文件内参数 `"electron": "^7.1.7",` 目前最新版本
     6. 执行 `npm install` 如果出错, 可以执行 `cnpm install` 进行安装
-    7. 运行开发环境 `npm run electron:serve`
+    7. 运行开发环境 `npm run electron:serve` 如果失败需要删除 node_modules 中的 electron 并重新 `npm install`
     8. 打包项目 `npm run electron:builder`
         * 打包时可能遇到下载不了, 可以手动下载并放在 `C:\Users\用户\AppData\Local\electron-builder\Cache` 文件夹下
             * 主要有三个文件 `nsis, winCodeSign, winCodeSign-2.5.0`
