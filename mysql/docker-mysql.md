@@ -2,7 +2,7 @@
     + 搜索 mysql 镜像
 2. `docker pull mysql` 
     + 拉取 mysql 镜像
-3. `docker run -d --name mysql -p 3306:3306 -v ~/dockerVolumes/mysql/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf -v ~/dockerVolumes/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="root" mysql`
+3. `docker run -d -p 3306:3306 -v ~/dockerVolumes/mysql/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf -v ~/dockerVolumes/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="root" mysql`
     * 可选参数
         * `--restart always` 开机启动
         * `--privileged=true` 提升容器内权限
