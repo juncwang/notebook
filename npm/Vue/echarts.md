@@ -63,6 +63,10 @@ this.eCharts.setOption({
         type: 'pie', // 饼状图 
         // type:'bar', // 柱状图
         // barWidth: '60%', // 柱子宽度
+        // type: 'line', // 线段
+        // smooth: true, // 曲线
+        // color: '#111', // 颜色
+        // symbol: 'none', // 去掉锚点样式
         radius: '55%', // 饼状图半径 可以是数组 ['50%', '70%'] 内空半径和外半径
         center: ['50%', '50%'], // 饼状图中心位置
         data: [ // 数据
@@ -140,7 +144,8 @@ this.eCharts.setOption({
             data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             axisTick: { // 显示位置在格子上
                 alignWithLabel: true
-            }
+            },
+            boundaryGap: false, // 显示撑满
         }
     ],
     // 纵坐标
