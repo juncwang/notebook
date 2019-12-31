@@ -15,7 +15,7 @@ this.eCharts = this.$echarts.init(
     document.getElementById('idName')
 )
 
-this.eCharts.setOption(
+this.eCharts.setOption({
     // 背景颜色
     backgroundColor: '#2c343c',
     // backgroundColor: {
@@ -149,6 +149,6 @@ this.eCharts.setOption(
             type : 'value'
         }
     ],
-)
+})
 ```
     
