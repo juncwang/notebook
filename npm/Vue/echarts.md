@@ -146,7 +146,11 @@ this.eCharts.setOption({
     // 纵坐标
     yAxis : [
         {
-            type : 'value'
+            type : 'value',
+            // 格式化显示
+            axisLabel: {
+                formatter: '{value}%'
+            }
         }
     ],
 })
