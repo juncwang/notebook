@@ -54,6 +54,7 @@
 
 * 数据库
     * `mongoose` 链接 `mongoDB` 数据库使用
+    * `mysql` 数据库
 
 * 其他
     * `gravatar` 全球公认头像库
