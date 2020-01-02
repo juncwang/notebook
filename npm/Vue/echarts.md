@@ -91,7 +91,9 @@ this.eCharts.setOption({
                     fontSize: '30',
                     fontWeight: 'bold'
                 }
-            }
+            },
+            // 格式化显示内容 b 数据名称 c 值 d 占比
+            formatter: '{b}: ({d}%)'
         },
         // 标签线设置
         labelLine: {
