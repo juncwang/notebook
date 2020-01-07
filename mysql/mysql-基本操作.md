@@ -14,7 +14,8 @@
     * `use mysql;` 切换到 mysql 数据库
     * `select User,authentication_string,Host from user;` 查看使用者及权限
 3. 创建可以访问的用户及密码
-    * `GRANT ALL PRIVILEGES ON *.* TO '你的账号'@'%' IDENTIFIED BY '访问密码';`
+    * `GRANT ALL PRIVILEGES ON *.* TO '你的账号'@'%' IDENTIFIED BY '访问密码';` 远程访问
+    * `grant all on * to '你的账号' identified by '访问密码';` 全部访问权限
 4. 刷新权限
     * `flush privileges;`
 5. 重启数据库服务
