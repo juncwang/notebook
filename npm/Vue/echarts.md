@@ -2,10 +2,14 @@
 
 * 安装方式
     * `npm install echarts --save-dev`
+    * `npm install echarts-gl --save-dev` 需要用到 3D 功能时安装
 
 * 配置 main.js
 ```js
 import echarts from 'echarts'
+// 需要用到 3D 功能时使用
+import echartsGl from 'echarts-gl'
+
 Vue.prototype.$echarts = echarts
 ```
 
