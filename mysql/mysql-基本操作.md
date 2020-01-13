@@ -9,7 +9,11 @@
 ### 设置远程连接数据库
 
 1. 修改`/etc/mysql/mysql.conf.d/mysqld.cnf`文件
+    * `[mysqld]`
+    * `character-set-server=utf8` 修改数据库字符集
     * `bind-address = 127.0.0.1` 改成 `bind-address = 0.0.0.0`
+    * `[client]`
+    * `default-character-set=utf8` 修改字符集
 2. 用 root 进入数据库对 mysql 数据库进行操作
     * `use mysql;` 切换到 mysql 数据库
     * `select User,authentication_string,Host from user;` 查看使用者及权限
