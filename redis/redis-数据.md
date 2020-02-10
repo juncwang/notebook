@@ -1,3 +1,7 @@
+### 参考
+
++ `http://redisdoc.com/`
+
 ### 数据
 + string    key-val
 + hash      [ 数据 ]
