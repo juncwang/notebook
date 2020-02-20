@@ -71,6 +71,7 @@
         * `three` three 前端3D框架
         * `electron` 将 vue 打包成 exe
         * `echarts` 绘制图表工具
+        * `gsap` 动画工具
         
 * 其他方法
     * 浏览器对象
