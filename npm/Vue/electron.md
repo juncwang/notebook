@@ -1,12 +1,25 @@
 ### electron
 
+* 安装前配置
+  1. `npm config set registry https://registry.npm.taobao.org/`
+  2. `npm config set ELECTRON_MIRROR http://npm.taobao.org/mirrors/electron/`
+    * `npm config set ELECTRON_MIRROR https://npm.taobao.org/mirrors/electron`
+    * `npm config set ELECTRON_MIRROR https://cdn.npm.taobao.org/dist/electron/`
+    * 这里有多个版本的镜像可以选择
+
+* 安装前检查
+  1. 检查全局组件内是否包含 electron 
+    * mac `/usr/local/node/lib/node_modules`
+  2. 如果有并且运行不成功就删掉 electron 重装全局
+    * `cnpm install electron -g`
+
 * 安装方式
     1. 新建项目时, 添加 router 时不使用history模式, 选择否 ( 使用 hash # 号 )
     2. 执行 `vue add electron-builder` 这里会提示选择版本 目前只能选择 6.0.0
     3. 安装完成后自动编译项目, 可能会报错, 因为新版本里 installVueDevtools 未使用, 可以忽略
     4. 系统将自动生成一个 `src/background.js` 文件
-    5. 修改 `package.json` 文件内参数 `"electron": "^7.1.7",` 目前最新版本
-    6. 执行 `npm install` 如果出错, 可以执行 `cnpm install` 进行安装
+    5. 修改 `package.json` 文件内参数 `"electron": "^8.0.1",` 目前最新版本
+    6. 执行 `cnpm install` 进行安装
     7. 运行开发环境 `npm run electron:serve` 如果失败需要删除 node_modules 中的 electron 并重新 `npm install`
     8. 打包项目 `npm run electron:builder`
         * 打包时可能遇到下载不了, 可以手动下载并放在 `C:\Users\用户\AppData\Local\electron-builder\Cache` 文件夹下
