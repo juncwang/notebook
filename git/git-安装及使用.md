@@ -98,6 +98,7 @@
     + 把远程仓库文件克隆到本地
 
 + `$ git pull origin master`
++ `$ git pull --rebase origin master` 如果出现新建项目上传失败, 可以尝试这个
     + 把远程仓库的 master 分支拉取到本地, 并调整暂存区及工作区
     + 等同于余下两部操作
         1. `$ git fetch origin master`
