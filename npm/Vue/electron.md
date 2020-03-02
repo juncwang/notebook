@@ -21,11 +21,11 @@
     5. 修改 `package.json` 文件内参数 `"electron": "^8.0.1",` 目前最新版本
     6. 执行 `cnpm install` 进行安装
     7. 运行开发环境 `npm run electron:serve` 如果失败需要删除 node_modules 中的 electron 并重新 `npm install`
-    8. 打包项目 `npm run electron:builder`
-        * 打包时可能遇到下载不了, 可以手动下载并放在 `C:\Users\用户\AppData\Local\electron-builder\Cache` 文件夹下
-            * 主要有三个文件 `nsis, winCodeSign, winCodeSign-2.5.0`
-        * 有可能出现打包失败 需要手动删除 `C:\Users\86151\Desktop\smart-eco\dist_electron\win-unpacked\resources\app.asar`
-        * 有时候报错就 重新执行 第 7 部操作
+    8. 打包项目 `npm run electron:build`
+
+    * 打包时, 包无法下载下来解决办法
+      * 手动到 `https://npm.taobao.org/mirrors/electron/` 下载对应版本的 electron 包文件并拷贝到 `C:\Users\userName\AppData\Local\electron\Cache` 文件夹下
+      * 再根据下载不成功提示把其他三个文件手动下载后拷贝到 `C:\Users\Administrator\AppData\Local\ electron-builder\cache\`
 
 * 系统配置 `vue.config.js`
 ```js
