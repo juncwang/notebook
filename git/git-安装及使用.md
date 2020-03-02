@@ -118,3 +118,5 @@
 3. 连续按下回车键进行生成
 4. 执行 SSH KEY $ cat ~/.ssh/id_rsa.pub 查看生成内容并进行复制
 5. 登陆 GitHub 进入个人设置内添加 SSH KEY
+
+6. 如果遇到权限问题可以使用 `chmod 600 ~/.ssh/id_rsa` 进行解决
