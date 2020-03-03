@@ -48,7 +48,7 @@
     2. `vim /etc/docker/daemon.json` (任选其一)
         + 网易云 `{"registry-mirrors":["http://hub-mirror.c.163.com"]}`
         + 阿里云 `{"registry-mirrors":["https://自己的编码.mirror.aliyuncs.com"]}`
-            + 进入阿里云控制台-> 产品与服务 搜索 容器镜像服务 -> 镜像加速器 `https://owdnpjmk.mirror.aliyuncs.com`
+            + 进入阿里云控制台-> 产品与服务 搜索 容器镜像服务 -> 镜像加速器 `https://2sdjfmgq.mirror.aliyuncs.com`
     3. 重新加载配置 `systemctl daemon-reload`
     4. 重启 docker `systemctl restart docker`
 11. 卸载
