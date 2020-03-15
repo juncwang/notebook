@@ -29,21 +29,23 @@
 
 * 系统配置 `vue.config.js`
 ```js
-pluginOptions: {
-    electronBuilder: {
-        builderOptions: {
-            // 项目图标 win为 256x256
-            win: {
-                icon: './public/favicon.ico'
-            },
-            // 项目图标 mac为 512x512
-            mac: {
-                icon: './public/app.png'
-            }
-            // 项目名称
-            productName: 'AppDemo'
-        }
-    }
+module.exports = {
+  pluginOptions: {
+      electronBuilder: {
+          builderOptions: {
+              // 项目图标 win为 256x256
+              win: {
+                  icon: './public/favicon.ico'
+              },
+              // 项目图标 mac为 512x512
+              mac: {
+                  icon: './public/app.png'
+              }
+              // 项目名称
+              productName: 'AppDemo'
+          }
+      }
+  }
 }
 ```
 
