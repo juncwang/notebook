@@ -56,3 +56,11 @@ let someValue: any = 'hello world'
 let strLength: number = (<string>someValue).length
 let strLength: number = (someValue as string).length
 ```
+
+##### 类型断言
+```ts
+function broken(name: string | null):string {
+    function postfix(epither: string) {
+        return name!.charAt(0) + '. the' + epither         // name! 告诉编译器 name 不会为 null
+    }
+}
