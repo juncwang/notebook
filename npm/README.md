@@ -43,6 +43,7 @@
     * `nodejs-websocket` 后台使用 websocket 
     * `http-server` 轻量级 http 服务
     * `pm2` node 进程管理工具
+    * `node-xlsx` 读写 xlsx 文件工具
     
 * 后台页面
     * `ejs` ejs 框架
