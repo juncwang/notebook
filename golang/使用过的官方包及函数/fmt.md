@@ -58,6 +58,7 @@
 ### 索引
 
 + `func Errorf(format string, a ...interface{}) error`
++ `func Fprintln(w io.Writer, a ...interface{}) (n int, err error)`
 + `func Print(a ...interface{}) (n int, err error)`
 + `func Printf(format string, a ...interface{}) (n int, err error)`
 + `func Println(a ...interface{}) (n int, err error)`
@@ -69,6 +70,8 @@
 
 + `func Errorf(format string, a ...interface{}) error`
     + Errorf根据format参数生成格式化字符串并返回一个包含该字符串的错误
++ `func Fprintln(w io.Writer, a ...interface{}) (n int, err error)`
+    + Fprintln采用默认格式将其参数格式化并写入w。总是会在相邻参数的输出之间添加空格并在输出结束后添加换行符。返回写入的字节数和遇到的任何错误。
 + `func Print(a ...interface{}) (n int, err error)`
     + Print采用默认格式将其参数格式化并写入标准输出。如果两个相邻的参数都不是字符串，会在它们的输出之间添加空格。返回写入的字节数和遇到的任何错误
 + `func Printf(format string, a ...interface{}) (n int, err error)`
