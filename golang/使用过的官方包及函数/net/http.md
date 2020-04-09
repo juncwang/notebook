@@ -11,6 +11,10 @@
 + `type Server struct`
     + `func (srv *Server) ListenAndServe() error`
     + `func (srv *Server) ListenAndServeTLS(certFile, keyFile string) error`
++ `type ServeMux struct`
+    + `func NewServeMux() *ServeMux`
+    + `func (mux *ServeMux) Handle(pattern string, handler Handler)`
+    + `func (mux *ServeMux) HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
 
 + `func Handle(pattern string, handler Handler)`
 + `func HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
@@ -176,6 +180,25 @@
         + ListenAndServe监听srv.Addr指定的TCP地址，并且会调用Serve方法接收到的连接。如果srv.Addr为空字符串，会使用":http"。
     + `func (srv *Server) ListenAndServeTLS(certFile, keyFile string) error`
         + ListenAndServeTLS监听srv.Addr确定的TCP地址，并且会调用Serve方法处理接收到的连接。必须提供证书文件和对应的私钥文件。如果证书是由权威机构签发的，certFile参数必须是顺序串联的服务端证书和CA证书。如果srv.Addr为空字符串，会使用":https"。
++ `type ServeMux struct`
+    + ServeMux类型是HTTP请求的多路转接器。它会将每一个接收的请求的URL与一个注册模式的列表进行匹配，并调用和URL最匹配的模式的处理器。
+    + 模式是固定的、由根开始的路径，如"/favicon.ico"，或由根开始的子树，如"/images/"（注意结尾的斜杠）。较长的模式优先于较短的模式，因此如果模式"/images/"和"/images/thumbnails/"都注册了处理器，后一个处理器会用于路径以"/images/thumbnails/"开始的请求，前一个处理器会接收到其余的路径在"/images/"子树下的请求。
+    + 注意，因为以斜杠结尾的模式代表一个由根开始的子树，模式"/"会匹配所有的未被其他注册的模式匹配的路径，而不仅仅是路径"/"。
+    + 模式也能（可选地）以主机名开始，表示只匹配该主机上的路径。指定主机的模式优先于一般的模式，因此一个注册了两个模式"/codesearch"和"codesearch.google.com/"的处理器不会接管目标为"http://www.google.com/"的请求。
+    + ServeMux还会注意到请求的URL路径的无害化，将任何路径中包含"."或".."元素的请求重定向到等价的没有这两种元素的URL。（参见path.Clean函数）
+    + 代码:
+    ```go
+    type ServeMux struct {
+        // 内含隐藏或非导出字段
+    }
+    ```
+    + `func NewServeMux() *ServeMux`
+        + NewServeMux创建并返回一个新的*ServeMux
+    + `func (mux *ServeMux) Handle(pattern string, handler Handler)`
+        + Handle注册HTTP处理器handler和对应的模式pattern。如果该模式已经注册有一个处理器，Handle会panic。
+    + `func (mux *ServeMux) HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
+        + HandleFunc注册一个处理器函数handler和对应的模式pattern。
+
 
 + `func Handle(pattern string, handler Handler)`
     + Handle注册HTTP处理器handler和对应的模式pattern（注册到DefaultServeMux）。如果该模式已经注册有一个处理器，Handle会panic。ServeMux的文档解释了模式的匹配机制。
