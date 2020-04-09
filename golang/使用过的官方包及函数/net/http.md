@@ -4,9 +4,13 @@
 
 ### 索引
 
-+ `type Handler`
++ `type Handler interface`
 + `type ResponseWriter interface`
+
 + `type Request struct`
++ `type Server struct`
+    + `func (srv *Server) ListenAndServe() error`
+    + `func (srv *Server) ListenAndServeTLS(certFile, keyFile string) error`
 
 + `func Handle(pattern string, handler Handler)`
 + `func HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
@@ -15,7 +19,7 @@
 
 ### 说明
 
-+ `type Handler`
++ `type Handler interface`
     + 实现了Handler接口的对象可以注册到HTTP服务端，为特定的路径及其子树提供服务。
     + ServeHTTP应该将回复的头域和数据写入ResponseWriter接口然后返回。返回标志着该请求已经结束，HTTP服务端可以转移向该连接上的下一个请求
     + 代码: 
@@ -43,6 +47,7 @@
         Write([]byte) (int, error)
     }
     ```
+
 + `type Request struct`
     + Request类型代表一个服务端接受到的或者客户端发送出去的HTTP请求。
     + Request各字段的意义和用途在服务端和客户端是不同的。除了字段本身上方文档，还可参见Request.Write方法和RoundTripper接口的文档。
@@ -142,6 +147,35 @@
         TLS *tls.ConnectionState
     }
     ```
++ `type Server struct`
+    + Server类型定义了运行HTTP服务端的参数。Server的零值是合法的配置。
+    + 代码:
+    ```go
+    type Server struct {
+        Addr           string        // 监听的TCP地址，如果为空字符串会使用":http"
+        Handler        Handler       // 调用的处理器，如为nil会调用http.DefaultServeMux
+        ReadTimeout    time.Duration // 请求的读取操作在超时前的最大持续时间
+        WriteTimeout   time.Duration // 回复的写入操作在超时前的最大持续时间
+        MaxHeaderBytes int           // 请求的头域最大长度，如为0则用DefaultMaxHeaderBytes
+        TLSConfig      *tls.Config   // 可选的TLS配置，用于ListenAndServeTLS方法
+        // TLSNextProto（可选地）指定一个函数来在一个NPN型协议升级出现时接管TLS连接的所有权。
+        // 映射的键为商谈的协议名；映射的值为函数，该函数的Handler参数应处理HTTP请求，
+        // 并且初始化Handler.ServeHTTP的*Request参数的TLS和RemoteAddr字段（如果未设置）。
+        // 连接在函数返回时会自动关闭。
+        TLSNextProto map[string]func(*Server, *tls.Conn, Handler)
+        // ConnState字段指定一个可选的回调函数，该函数会在一个与客户端的连接改变状态时被调用。
+        // 参见ConnState类型和相关常数获取细节。
+        ConnState func(net.Conn, ConnState)
+        // ErrorLog指定一个可选的日志记录器，用于记录接收连接时的错误和处理器不正常的行为。
+        // 如果本字段为nil，日志会通过log包的标准日志记录器写入os.Stderr。
+        ErrorLog *log.Logger
+        // 内含隐藏或非导出字段
+    }
+    ```
+    + `func (srv *Server) ListenAndServe() error`
+        + ListenAndServe监听srv.Addr指定的TCP地址，并且会调用Serve方法接收到的连接。如果srv.Addr为空字符串，会使用":http"。
+    + `func (srv *Server) ListenAndServeTLS(certFile, keyFile string) error`
+        + ListenAndServeTLS监听srv.Addr确定的TCP地址，并且会调用Serve方法处理接收到的连接。必须提供证书文件和对应的私钥文件。如果证书是由权威机构签发的，certFile参数必须是顺序串联的服务端证书和CA证书。如果srv.Addr为空字符串，会使用":https"。
 
 + `func Handle(pattern string, handler Handler)`
     + Handle注册HTTP处理器handler和对应的模式pattern（注册到DefaultServeMux）。如果该模式已经注册有一个处理器，Handle会panic。ServeMux的文档解释了模式的匹配机制。
