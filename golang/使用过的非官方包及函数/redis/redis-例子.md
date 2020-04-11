@@ -1,4 +1,8 @@
 ```go
+import(
+	"module/redigo/redis"
+)
+
 func main()  {
 	// 链接到 redis 数据库
 	conn, err := redis.Dial("tcp", "40.73.79.13:9999")

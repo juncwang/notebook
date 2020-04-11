@@ -23,22 +23,24 @@
 
 + `type Pool struct`
     ```go
-    // Dial 是应用程序提高的创建并配置,链接功能
-	Dial func() (Conn, error)
-    // DialContext 是应用程序提高的创建并配置,与给定上下文链接功能
-	DialContext func(ctx context.Context) (Conn, error)
-    // TestOnBorrow 是可选性, 用于检测空闲链接健康状态, 然后链接再次使用
-	TestOnBorrow func(c Conn, t time.Time) error
-    // 最大空闲链接数
-	MaxIdle int
-    // 最活动大链接数, 0 表示没有限制
-	MaxActive int
-    // 最大空闲时间
-	IdleTimeout time.Duration
-    // 如果为 true MaxActive 处于限制状态, 则 Get() 时, 没有活动链接数时将等待其他活动链接数关闭
-	Wait bool
-    // 最大链接时间, 0 表示不限制
-	MaxConnLifetime time.Duration
+    type Pool struct{
+        // Dial 是应用程序提高的创建并配置,链接功能
+        Dial func() (Conn, error)
+        // DialContext 是应用程序提高的创建并配置,与给定上下文链接功能
+        DialContext func(ctx context.Context) (Conn, error)
+        // TestOnBorrow 是可选性, 用于检测空闲链接健康状态, 然后链接再次使用
+        TestOnBorrow func(c Conn, t time.Time) error
+        // 最大空闲链接数
+        MaxIdle int
+        // 最活动大链接数, 0 表示没有限制
+        MaxActive int
+        // 最大空闲时间
+        IdleTimeout time.Duration
+        // 如果为 true MaxActive 处于限制状态, 则 Get() 时, 没有活动链接数时将等待其他活动链接数关闭
+        Wait bool
+        // 最大链接时间, 0 表示不限制
+        MaxConnLifetime time.Duration
+    }
     ```
 
     + `func (p *Pool) Get() Conn`
