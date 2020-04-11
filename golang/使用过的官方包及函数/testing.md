@@ -19,6 +19,7 @@ func TestTimeConsuming(t *testing.T) {
 + `type T struct `
     + `func (c *T) Fatalf(format string, args ...interface{})`
     + `func (c *T) Logf(format string, args ...interface{})`
+    * `func (t *T) Run(name string, f func(t *T)) bool`
  
 
 ### 说明
@@ -34,3 +35,6 @@ func TestTimeConsuming(t *testing.T) {
         + Log 使用与 Printf 相同的格式化语法对它的参数进行格式化，然后将格式化后的文本记录到错误日志里面。 如果输入的格式化文本最末尾没有出现新行，那么将一个新行添加到格式化后的文本末尾。
         1. 对于测试来说，Logf 产生的格式化文本只会在测试失败或者设置了 -test.v 标志的情况下被打印出来
         2. 对于基准测试来说，为了避免 -test.v 标志的值对测试的性能产生影响，Logf 产生的格式化文本总会被打印出来
+    + `func (t *T) Run(name string, f func(t *T)) bool`
+        + 执行名字为 name 的子测试 f ，并报告 f 在执行过程中是否出现了任何失败。Run 将一直阻塞直到 f 的所有并行测试执行完毕。
+        + Run 可以在多个 goroutine 里面同时进行调用，但这些调用必须发生在 t 的外层测试函数（outer test function）返回之前。

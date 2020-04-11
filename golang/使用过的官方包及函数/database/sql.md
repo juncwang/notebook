@@ -1,3 +1,9 @@
+### 概述
+
++ sql包提供了保证SQL或类SQL数据库的泛用接口。
++ 使用sql包时必须注入（至少）一个数据库驱动。参见http://golang.org/s/sqldrivers 获取驱动列表。
++ 更多用法示例，参见wiki页面：http://golang.org/s/sqlwiki。
+
 ### 索引
 
 * `type DB struct`
