@@ -1,4 +1,7 @@
 ### 概述
+
++ 命令 `go test` 简单测试信息 `go test -v` 详细测试信息
+
 + testing 提供对 Go 包的自动化测试的支持。通过 `go test` 命令，能够自动执行如下形式的任何函数：
 `func TestXxx(*testing.T)`
 + 其中 Xxx 可以是任何字母数字字符串（但第一个字母不能是 [a-z]），用于识别测试例程。
@@ -16,6 +19,12 @@ func TestTimeConsuming(t *testing.T) {
 
 ### 索引
 
++ `func TestMain(m *testing.M)`
++ `TestUser_AddUser(t *testing.T)`
+
++ `type M struct`
+    + `func (m *M) Run() int`
+
 + `type T struct `
     + `func (c *T) Fatalf(format string, args ...interface{})`
     + `func (c *T) Logf(format string, args ...interface{})`
@@ -23,6 +32,18 @@ func TestTimeConsuming(t *testing.T) {
  
 
 ### 说明
+
++ `func TestMain(m *testing.M)`
+    + 在测试的其他函数执行前执行, 如果没有 m.Run 方法, 其他测试函数将不被执行
+    + `func (m *M) Run() int`
+        + Run 运行这些测试。它返回要传递给 os.Exit 的退出代码。
++ `func TestXXXX(t *testing.T)`
+    + 会顺序执行的测试函数
+
++ `type M struct`
+    + M 是传递给 TestMain 函数以运行实际测试的类型。
+    + `func (m *M) Run() int`
+        + Run 运行这些测试。它返回要传递给 os.Exit 的退出代码。 m 不允许此函数, 其他测试程序将不被执行
 
 + `type T struct `
     + T 是传递给测试函数的一种类型，它用于管理测试状态并支持格式化测试日志。测试日志会在执行测试的过程中不断累积， 并在测试完成时转储至标准输出。
