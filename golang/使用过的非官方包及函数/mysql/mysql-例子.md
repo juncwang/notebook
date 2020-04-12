@@ -50,3 +50,45 @@ func init()  {
 		return
 	}
 ```
+
+* 查询数据
+```go
+// GetUserById 根据用户的 id 从输入库中查询一条记录
+	sqlStr := "select id, username, password, email from users where id = ?"
+	// 执行
+	row := utils.Db.QueryRow(sqlStr, this.Id)
+	// 声明
+	var id int
+	var username string
+	var password string
+	var email string
+	// 扫描数据 并放入变量中
+	err = row.Scan(&id, &username, &password, &email)
+	if err != nil {
+		return
+	}
+
+// GetUsers 获取所有的记录
+	// 写 sql 语句
+	sqlStr := "select id,username,password,email from users"
+	// 执行
+	rows, err := utils.Db.Query(sqlStr)
+	if err != nil {
+		return
+	}
+
+	// rows 每次调用 Scan 时, 都需要调用一次 Next 方法, 
+	// 当 Next 方法返回 false 时表示已经没有更多数据
+	for rows.Next() {
+		// 声明
+		var id int
+		var username string
+		var password string
+		var email string
+		// 扫描数据 并放入变量中
+		err = rows.Scan(&id, &username, &password, &email)
+		if err != nil {
+			return
+		}
+	}
+```
