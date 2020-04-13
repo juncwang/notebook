@@ -8,6 +8,15 @@
 + `type ResponseWriter interface`
 
 + `type Request struct`
+
++ `type Header map[string][]string`
+    + `func (h Header) Get(key string) string`
+    + `func (h Header) Set(key, value string)`
+    + `func (h Header) Add(key, value string)`
+    + `func (h Header) Del(key string)`
+    + `func (h Header) Write(w io.Writer) error`
+    + `func (h Header) WriteSubset(w io.Writer, exclude map[string]bool) error`
+
 + `type Server struct`
     + `func (srv *Server) ListenAndServe() error`
     + `func (srv *Server) ListenAndServeTLS(certFile, keyFile string) error`
@@ -151,6 +160,22 @@
         TLS *tls.ConnectionState
     }
     ```
+
++ `type Header map[string][]string`
+    + Header代表HTTP头域的键值对。
+    + `func (h Header) Get(key string) string`
+        + Get返回键对应的第一个值，如果键不存在会返回""。如要获取该键对应的值切片，请直接用规范格式的键访问map。
+    + `func (h Header) Set(key, value string)`
+        + Set添加键值对到h，如键已存在则会用只有新值一个元素的切片取代旧值切片。
+    + `func (h Header) Add(key, value string)`
+        + Add添加键值对到h，如键已存在则会将新的值附加到旧值切片后面。
+    + `func (h Header) Del(key string)`
+        + Del删除键值对。
+    + `func (h Header) Write(w io.Writer) error`
+        + Write以有线格式将头域写入w。
+    + `func (h Header) WriteSubset(w io.Writer, exclude map[string]bool) error`
+        + WriteSubset以有线格式将头域写入w。当exclude不为nil时，如果h的键值对的键在exclude中存在且其对应值为真，该键值对就不会被写入w。
+
 + `type Server struct`
     + Server类型定义了运行HTTP服务端的参数。Server的零值是合法的配置。
     + 代码:
