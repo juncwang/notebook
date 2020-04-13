@@ -8,6 +8,12 @@
 + `type ResponseWriter interface`
 
 + `type Request struct`
+    + `func (r *Request) ParseForm() error`
+    + `func (r *Request) ParseMultipartForm(maxMemory int64) error`
+    + `func (r *Request) FormValue(key string) string`
+    + `func (r *Request) PostFormValue(key string) string`
+    + `func (r *Request) FormFile(key string) (multipart.File, *multipart.FileHeader, error)`
+    + `func (r *Request) MultipartReader() (*multipart.Reader, error)`
 
 + `type Header map[string][]string`
     + `func (h Header) Get(key string) string`
@@ -160,6 +166,21 @@
         TLS *tls.ConnectionState
     }
     ```
+    + `func (r *Request) ParseForm() error`
+        + ParseForm解析URL中的查询字符串，并将解析结果更新到r.Form字段。
+        + 对于POST或PUT请求，ParseForm还会将body当作表单解析，并将结果既更新到r.PostForm也更新到r.Form。解析结果中，POST或PUT请求主体要优先于URL查询字符串（同名变量，主体的值在查询字符串的值前面）。
+        + 如果请求的主体的大小没有被MaxBytesReader函数设定限制，其大小默认限制为开头10MB。
+        + ParseMultipartForm会自动调用ParseForm。重复调用本方法是无意义的。
+    + `func (r *Request) ParseMultipartForm(maxMemory int64) error`
+        + ParseMultipartForm将请求的主体作为multipart/form-data解析。请求的整个主体都会被解析，得到的文件记录最多maxMemery字节保存在内存，其余部分保存在硬盘的temp文件里。如果必要，ParseMultipartForm会自行调用ParseForm。重复调用本方法是无意义的。
+    + `func (r *Request) FormValue(key string) string`
+        + FormValue返回key为键查询r.Form字段得到结果[]string切片的第一个值。POST和PUT主体中的同名参数优先于URL查询字符串。如果必要，本函数会隐式调用ParseMultipartForm和ParseForm。
+    + `func (r *Request) PostFormValue(key string) string`
+        + PostFormValue返回key为键查询r.PostForm字段得到结果[]string切片的第一个值。如果必要，本函数会隐式调用ParseMultipartForm和ParseForm。
+    + `func (r *Request) FormFile(key string) (multipart.File, *multipart.FileHeader, error)`
+        + FormFile返回以key为键查询r.MultipartForm字段得到结果中的第一个文件和它的信息。如果必要，本函数会隐式调用ParseMultipartForm和ParseForm。查询失败会返回ErrMissingFile错误。
+    + `func (r *Request) MultipartReader() (*multipart.Reader, error)`
+        + 如果请求是multipart/form-data POST请求，MultipartReader返回一个multipart.Reader接口，否则返回nil和一个错误。使用本函数代替ParseMultipartForm，可以将r.Body作为流处理。
 
 + `type Header map[string][]string`
     + Header代表HTTP头域的键值对。
