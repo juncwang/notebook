@@ -4,6 +4,9 @@
 
 ### 索引
 
++ `Variables`
+    + `var EOF = errors.New("EOF")`
+
 + `type Reader interface`
 + `type Closer interface`
 + `type ReadCloser interface`
@@ -11,6 +14,10 @@
 + `func Copy(dst Writer, src Reader) (written int64, err error)`
 
 ### 说明
+
++ `Variables`
+    + `var EOF = errors.New("EOF")`
+        + EOF当无法得到更多输入时，Read方法返回EOF。当函数一切正常的到达输入的结束时，就应返回EOF。如果在一个结构化数据流中EOF在不期望的位置出现了，则应返回错误ErrUnexpectedEOF或者其它给出更多细节的错误。
 
 + `type Reader interface`
     + Reader接口用于包装基本的读取方法。
