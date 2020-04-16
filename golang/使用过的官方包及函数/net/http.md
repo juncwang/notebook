@@ -6,6 +6,9 @@
 
 + `type Handler interface`
 + `type ResponseWriter interface`
++ `type FileSystem interface`
++ `type Dir string`
+    + `func (d Dir) Open(name string) (File, error)`
 
 + `type Request struct`
     + `func (r *Request) ParseForm() error`
@@ -35,6 +38,9 @@
 + `func HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
 + `func ListenAndServe(addr string, handler Handler) error`
 + `func ListenAndServeTLS(addr string, certFile string, keyFile string, handler Handler) error`
+
++ `func StripPrefix(prefix string, h Handler) Handler`
++ `func FileServer(root FileSystem) Handler`
 
 ### 说明
 
@@ -66,6 +72,17 @@
         Write([]byte) (int, error)
     }
     ```
++ `type FileSystem interface`
+    + FileSystem接口实现了对一系列命名文件的访问。文件路径的分隔符为'/'，不管主机操作系统的惯例如何。
+    + 代码:
+    ```go
+    type FileSystem interface {
+        Open(name string) (File, error)
+    }
+    ```
++ `type Dir string`
+    + Dir使用限制到指定目录树的本地文件系统实现了http.FileSystem接口。空Dir被视为"."，即代表当前目录。
+    + `func (d Dir) Open(name string) (File, error)`
 
 + `type Request struct`
     + Request类型代表一个服务端接受到的或者客户端发送出去的HTTP请求。
@@ -293,3 +310,10 @@
         }
     }
     ```
+
++ `func StripPrefix(prefix string, h Handler) Handler`
+    + StripPrefix返回一个处理器，该处理器会将请求的URL.Path字段中给定前缀prefix去除后再交由h处理。StripPrefix会向URL.Path字段中没有给定前缀的请求回复404 page not found。
++ `func FileServer(root FileSystem) Handler`
+    + FileServer返回一个使用FileSystem接口root提供文件访问服务的HTTP处理器。要使用操作系统的FileSystem接口实现，可使用http.Dir：
+    + `http.Handle("/", http.FileServer(http.Dir("/tmp")))`
+    + `http.ListenAndServe(":5000", http.FileServer(http.Dir("/usr/share/doc")))`
