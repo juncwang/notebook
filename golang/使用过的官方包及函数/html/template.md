@@ -44,3 +44,39 @@
         + Execute方法将解析好的模板应用到data上，并将输出写入wr。如果执行时出现错误，会停止执行，但有可能已经写入wr部分数据。模板可以安全的并发执行
     + `func (t *Template) ExecuteTemplate(wr io.Writer, name string, data interface{}) error`
         + ExecuteTemplate方法类似Execute，但是使用名为name的t关联的模板产生输出。
+
+### 动作
+
+* 数据
+    * `{{.}}` 
+        * 通过 t.Execute(w, `数据`) 可对`{{.}}`进行替换
+
+* 条件
+    * `{{if .}} ... {{end}}`
+    * `{{if .}} ... {{else}} ... {{end}}`
+        * `.` 是传递给条件动作的判断参数
+
+* 迭代
+    * `{{range .}} ... {{.}} ... {{end}}`
+    * `{{range .}} ... {{.}} ... {{else}} ... {{end}}`
+        * 遍历数组 
+        * `{{.}}` 代表遍历时得到的元素
+            * `{{.param}}` 可得到元素对象的参数
+        * `{{else}}` 没有遍历到任何元素
+    * `{{range $k, $v := .}} ... {{$k}} ... {{$k}} ...{{end}}`
+        * 遍历 map 变量用 $ 开头
+        * `$k` 建 `$v` 值
+    * `{{c1 | c2 | c3}}`
+        * 遍历管道
+        * c1 c2 c3 可以使参数或函数
+
+* 设置
+    * `{{with arg}} ... {{.}} ... {{end}}`
+    * `{{with arg}} ... {{.}} ... {{else}} ... {{.}} ... {{end}}`
+        * arg 为设定的一个参数与传过来的值进行比较
+        * arg 有具体值时 不论传入什么值都会显示 arg 本身
+        * arg 为 "" 时 会通过 else 显示后台传回的值
+
+* 包含
+    * `{{template "name"}}`
+    * `{{template "name" arg}}`
