@@ -82,7 +82,9 @@
     import { Component, Emit, Inject, Model, Prop, Provide, Vue, Watch } from 'vue-property-decorator'
 
     @Component({
-        compName
+        components：{
+            compName
+        }
     })
     export class MyComponent extends Vue {
     
