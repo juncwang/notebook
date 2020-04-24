@@ -72,6 +72,7 @@
         + -v HOST_PATH:CONTAINER_PATH[:OPTIONS] 把本地文件目录与容器文件目录共享
             + OPTIONS
                 + ro 只读不可写
+            * window 下 路径用 `/d/` 表示 D 盘根目录
         + -i 以交互模式运行容器, 通常与 -t 同时使用
         + -t 为容器重新分配一个伪输入终端, 通常与 -i 同时使用
             + 退出容器
@@ -147,3 +148,4 @@
 
 ##### docker cp CONTAINER_ID:CONTAINER_PATH HOST_PATH
 + 将容器内的文件拷贝到本地
++ * window 下 本地存放路径默认为 当前所在磁盘 前面不需要加 `/d/`

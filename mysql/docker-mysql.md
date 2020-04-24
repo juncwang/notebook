@@ -3,6 +3,7 @@
 2. `docker pull mysql` 
     + 拉取 mysql 镜像
 3. `docker run -d -p 3306:3306 -v ~/dockerVolumes/mysql/config/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf -v ~/dockerVolumes/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="root" mysql`
+    * window 下 路径用 `/d/` 表示 D 盘根目录
     * 可选参数
         * `--restart always` 开机启动
         * `--privileged=true` 提升容器内权限
@@ -21,5 +22,6 @@
         1. 查看刚才创建的容器是否存在 存在就先删除
         2. `docker run -d -e MYSQL_ROOT_PASSWORD="root" mysql:xx.xx.xx` 运行一个新的容器
         3. `docker cp 容器ID:mysqld.cnf路径 本机存放mysqld.cnf路径` 把容器内的配置文件拷贝出来放到应该放的位置
+            * window 下 本地存放路径默认为 当前所在磁盘 前面不需要加 `/d/`
         4. 删除临时的新容器
         5. 重新创建 mysql 容器
