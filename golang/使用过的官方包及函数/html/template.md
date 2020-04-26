@@ -79,4 +79,23 @@
 
 * 包含
     * `{{template "name"}}`
-    * `{{template "name" arg}}`
+    * `{{template "name" .}}`
+        * 这里需要给多个模板 t.ParseFiles("1.html", "2.html")
+        * 如果在第一个模板中使用 {{template "2.html"}}
+        * 如果需要第二个模板得到值需要在后面加入参数 {{template "2.html" .}}
+
+* 定义动作
+    * `{{define "model"}}`
+    * `<html><body> ...`
+    * `{{template "content"}}`
+    * `...</body></html>`
+    * `{{end}}`
+
+    * `{{ define "content"}} ... {{end}}`
+        * 自定义模板
+        * 调用时需要使用 t.ExecuteTemplate(w, content, "parame")
+
+* 块动作
+    * `{{block "content" .}} ... {{end}}`
+        * 设置默认模板
+        * 如果 定义模板没有找到 就使用 默认的模板
