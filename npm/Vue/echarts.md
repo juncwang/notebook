@@ -141,6 +141,7 @@ this.eCharts.setOption({
         left: '3%',
         right: '4%',
         bottom: '3%',
+        // 控制内容
         containLabel: true
     },
     // 横坐标
