@@ -9,6 +9,8 @@
 + `type FileSystem interface`
 + `type Dir string`
     + `func (d Dir) Open(name string) (File, error)`
++ `type Cookie struct`
+    + `func (c *Cookie) String() string`
 
 + `type Request struct`
     + `func (r *Request) ParseForm() error`
@@ -38,6 +40,8 @@
 + `func HandleFunc(pattern string, handler func(ResponseWriter, *Request))`
 + `func ListenAndServe(addr string, handler Handler) error`
 + `func ListenAndServeTLS(addr string, certFile string, keyFile string, handler Handler) error`
+
++ `func SetCookie(w ResponseWriter, cookie *Cookie)`
 
 + `func StripPrefix(prefix string, h Handler) Handler`
 + `func FileServer(root FileSystem) Handler`
@@ -83,6 +87,28 @@
 + `type Dir string`
     + Dir使用限制到指定目录树的本地文件系统实现了http.FileSystem接口。空Dir被视为"."，即代表当前目录。
     + `func (d Dir) Open(name string) (File, error)`
++ `type Cookie struct`
+    + Cookie代表一个出现在HTTP回复的头域中Set-Cookie头的值里或者HTTP请求的头域中Cookie头的值里的HTTP cookie
+    ```go
+    type Cookie struct {
+        Name       string
+        Value      string
+        Path       string
+        Domain     string
+        Expires    time.Time
+        RawExpires string
+        // MaxAge=0表示未设置Max-Age属性
+        // MaxAge<0表示立刻删除该cookie，等价于"Max-Age: 0"
+        // MaxAge>0表示存在Max-Age属性，单位是秒
+        MaxAge   int
+        Secure   bool
+        HttpOnly bool
+        Raw      string
+        Unparsed []string // 未解析的“属性-值”对的原始文本
+    }
+    ```
+    + `func (c *Cookie) String() string`
+        + String返回该cookie的序列化结果。如果只设置了Name和Value字段，序列化结果可用于HTTP请求的Cookie头或者HTTP回复的Set-Cookie头；如果设置了其他字段，序列化结果只能用于HTTP回复的Set-Cookie头
 
 + `type Request struct`
     + Request类型代表一个服务端接受到的或者客户端发送出去的HTTP请求。
@@ -310,6 +336,9 @@
         }
     }
     ```
+
++ `func SetCookie(w ResponseWriter, cookie *Cookie)`
+    + SetCookie在w的头域中添加Set-Cookie头，该HTTP头的值为cookie
 
 + `func StripPrefix(prefix string, h Handler) Handler`
     + StripPrefix返回一个处理器，该处理器会将请求的URL.Path字段中给定前缀prefix去除后再交由h处理。StripPrefix会向URL.Path字段中没有给定前缀的请求回复404 page not found。
