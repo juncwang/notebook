@@ -27,6 +27,8 @@
     + `func (h Header) Del(key string)`
     + `func (h Header) Write(w io.Writer) error`
     + `func (h Header) WriteSubset(w io.Writer, exclude map[string]bool) error`
+    + `func (r *Request) Cookies() []*Cookie`
+    + `func (r *Request) Cookie(name string) (*Cookie, error)`
 
 + `type Server struct`
     + `func (srv *Server) ListenAndServe() error`
@@ -224,7 +226,10 @@
         + FormFile返回以key为键查询r.MultipartForm字段得到结果中的第一个文件和它的信息。如果必要，本函数会隐式调用ParseMultipartForm和ParseForm。查询失败会返回ErrMissingFile错误。
     + `func (r *Request) MultipartReader() (*multipart.Reader, error)`
         + 如果请求是multipart/form-data POST请求，MultipartReader返回一个multipart.Reader接口，否则返回nil和一个错误。使用本函数代替ParseMultipartForm，可以将r.Body作为流处理。
-
+    + `func (r *Request) Cookies() []*Cookie`
+        + Cookies解析并返回该请求的Cookie头设置的cookie
+    + `func (r *Request) Cookie(name string) (*Cookie, error)`
+        + Cookie返回请求中名为name的cookie，如果未找到该cookie会返回nil, ErrNoCookie
 + `type Header map[string][]string`
     + Header代表HTTP头域的键值对。
     + `func (h Header) Get(key string) string`
