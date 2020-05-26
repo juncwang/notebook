@@ -74,6 +74,7 @@
         * `echarts` 绘制图表工具
         * `gsap` 动画工具
         * `vue-particles` 粒子背景交互
+    * `reactjs` react 框架
         
 * 其他方法
     * 浏览器对象
