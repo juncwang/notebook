@@ -63,6 +63,7 @@
 
 * 前端框架
     * `vuejs` vue 框架 
+    * `reactjs` react 框架
         * `axios` 请求工具
         * `router` 路由
         * `vuex` 数据存储
@@ -74,7 +75,8 @@
         * `echarts` 绘制图表工具
         * `gsap` 动画工具
         * `vue-particles` 粒子背景交互
-    * `reactjs` react 框架
+    * `webpack` 打包测试环境
+    
         
 * 其他方法
     * 浏览器对象
