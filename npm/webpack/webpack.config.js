@@ -6,6 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // css 压缩文件插件
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 
+// PWA 渐进式网络开发应用程序 离线加载
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
+
+// webpack 插件
+const webpack = require("webpack")
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
+
 // 设置 node 的环境变量
 // process.env.NODE_ENV = "developement"
 
@@ -21,7 +28,8 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 
 // js 使用动态导入 单独引入会被 optimization 单独打包
 // webpackChunkName 打包后的文件名
-// import (/* webpackChunkName: 'test' */'./test')
+// import (/* webpackChunkName: 'test' */'./test') 懒加载
+// import (/* webpackChunkName: 'test', webpackPrefetch: true */'./test') 预加载
 //      .then(({methodName}) => {
 //          methodeName(parame)
 //      })
@@ -57,6 +65,10 @@ module.exports = {
                  * "eslintConfig": {
                  *      "extends": "airbnb-base"
                  *      "extends": "airbnb" 如果是需要包含 react 就用这个
+                 *      "env": {
+                 *          // 支持浏览器全局变量 PWA 需要
+                 *          "browser": true
+                 *      }
                  * }
                  *
                  * // 在代码中加入 // eslint-disable-next-line 表示下一行不进行规则检查
@@ -86,39 +98,51 @@ module.exports = {
                         test: /\.js$/,
                         // 不处理第三方包内的代码
                         exclude: /node_modules/,
-                        loader: 'babel-loader',
-                        // 前两中 1 + 2 适用
-                        // options: {
-                        //     // 预设 指示 babel 做什么兼容处理
-                        //     presets: ['@babel/preset-env']
-                        // }
-                        // 第三种按需处理兼容性问题 1 + 3
-                        options: {
-                            presets: [
-                                [
-                                    '@babel/preset-env',
-                                    {
-                                        // 按需加载
-                                        useBuiltIns: 'usage',
-                                        // 指定 core-js 版本
-                                        corejs: {
-                                            version: 3
-                                        },
-                                        // 指定具体的兼容性做到哪个浏览器版本
-                                        targets: {
-                                            chrome: '60',
-                                            firefox: '60',
-                                            ie: '9',
-                                            safari: '10',
-                                            edge: '17'
-                                        }
-                                    }
-                                ]
-                            ],
-                            // 开启 babel 缓存
-                            // 第二次构建时, 读取之前缓存
-                            cacheDirectory: true
-                        }
+                        use: [
+                            // 开启多进程打包
+                            {
+                                loader: 'thread-loader',
+                                // 可以不加
+                                options: {
+                                    workers: 2 // 进程2个
+                                }
+                            },
+                            {
+                                loader: 'babel-loader',
+                                // 前两中 1 + 2 适用
+                                // options: {
+                                //     // 预设 指示 babel 做什么兼容处理
+                                //     presets: ['@babel/preset-env']
+                                // }
+                                // 第三种按需处理兼容性问题 1 + 3
+                                options: {
+                                    presets: [
+                                        [
+                                            '@babel/preset-env',
+                                            {
+                                                // 按需加载
+                                                useBuiltIns: 'usage',
+                                                // 指定 core-js 版本
+                                                corejs: {
+                                                    version: 3
+                                                },
+                                                // 指定具体的兼容性做到哪个浏览器版本
+                                                targets: {
+                                                    chrome: '60',
+                                                    firefox: '60',
+                                                    ie: '9',
+                                                    safari: '10',
+                                                    edge: '17'
+                                                }
+                                            }
+                                        ]
+                                    ],
+                                    // 开启 babel 缓存
+                                    // 第二次构建时, 读取之前缓存
+                                    cacheDirectory: true
+                                }
+                            }
+                        ],
                     },
                     {
                         // 处理 less 资源
@@ -233,6 +257,39 @@ module.exports = {
         }), // 使用 css 配置时需要把 css loader 内容进行更改
         // 配置 css 压缩
         new OptimizeCssAssetsWebpackPlugin(),
+        // 配置 PWA
+        new WorkboxWebpackPlugin.GenerateSW({
+            // 帮助 serviceworker 快速启动
+            // 删除旧的 serviceworker
+            // 生成一个 serviceworker 配置文件
+            clientsClaim: true,
+            skipWaiting: true
+            // 在入口文件 js 中配置
+            /**
+             * if('serviceWorker' in navigator) {
+             *     window.addEventListener('load', () => {
+             *         navigator.serviceWorker
+             *              .register('/service-worker.js')
+             *              .then(() => console.log('sw注册成功'))
+             *              .catch(() => console.log('sw注册失败'))
+             *     })
+             * }
+             *
+             * SW 代码必须运行在服务器上
+             * --> nodejs
+             * -->
+             *      npm i serve -g
+             *      serve -s build 启动服务器, 将 build 目录下所有资源作为静态资源暴露出去
+             */
+        }),
+        // 告诉 webpack 哪些库不参与打包, 同时使用时的名称也得变~
+        new webpack.DllReferencePlugin({
+            manifest: resolve(__dirname, 'dll/manifest.json')
+        }),
+        // 将某个文件打包输出出去, 并在html中自动引入该资源
+        new AddAssetHtmlWebpackPlugin({
+            filepath: resolve(__dirname, 'dll/jquery.js')
+        })
 
     ],
     // 模式
@@ -296,9 +353,14 @@ module.exports = {
      */
 
     // 可以将 node_modules 中代码单独打包一个 chunk 最终输出
-    optimization: {
-        splitChunks: {
-            chunks: "all"
-        }
-    }
+    // optimization: {
+    //     splitChunks: {
+    //         chunks: "all"
+    //     }
+    // },
+    // 打包时忽略第三方库
+    // externals: {
+    //     // 忽略库名 -- npm 包名
+    //     jquery: 'jQuery'
+    // }
 }

@@ -30,3 +30,9 @@
     * "@babel/preset-env" 处理基本兼容性问题
     * "@babel/polyfill" 处理全部兼容性问题
     * "core-js" 按需做 js 兼容性处理
+
+    * "workbox-webpack-plugin" PWA 插件
+
+    * "thread-loader" 多进程打包工具
+
+    * "add-asset-html-webpack-plugin" 引入单独打包出去的内容
