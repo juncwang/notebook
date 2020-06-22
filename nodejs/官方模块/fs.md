@@ -35,7 +35,7 @@
             * `err <Error>` 错误
     * fs.readFile(path[, options], callback) 异步读取文件内容
         * `options <Object> | <string>`
-            * `encoding <string> | <null>` 默认值: null
+            * `encoding <string> | <null>` 默认值: null - options: utf8
             * `flag <string>` 参见文件系统 flag 的支持。默认值: 'r'
         * `callback <Function>` 
             * `err <Error>` 错误
