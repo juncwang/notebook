@@ -35,6 +35,7 @@
     * `nodemon` 后台服务程序 (调试后台程序使用)
     * `nodejs-websocket` 用于创建webSocket
     * `express` node 的一个网络框架
+    * `socket.io` webSocket 框架
     * `koa` express 的一个升级网络框架
     * `body-parser` 解析 body 的工具
     * `connect-multiparty` 上传文件
@@ -95,3 +96,32 @@
             * `constranints` 为一个对象
                 * `{audio: true, video: true}` 默认两个都是打开
                 * `{video: {width: 1280, height: 720}}` 设置视频的宽高比
+            * js 原生导出 csv 文件
+            ```js
+            // 导出数据表 ====================================================================================
+            // 导出csv
+            /**
+            * @param jsonData `[{},{}]` 具体数据内容 json 数组
+            * @param str `参数1名称,参数2名称\n` 表头显示内容用逗号隔开
+            * @param fileName 文件名称
+            */
+            export function exportCSV(jsonData: any[], str: string, fileName: string) {
+                //增加\t为了不让表格显示科学计数法或者其他格式
+                for (let i = 0; i < jsonData.length; i++) {
+                    for (let item in jsonData[i]) {
+                        str += `${jsonData[i][item] + '\t'},`;
+                    }
+                    str += '\n';
+                }
+                //encodeURIComponent解决中文乱码
+                let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+                //通过创建a标签实现
+                var link = document.createElement("a");
+                link.href = uri;
+                //对下载的文件命名
+                link.download = fileName + '.csv';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            ```

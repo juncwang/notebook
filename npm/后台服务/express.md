@@ -10,6 +10,13 @@ const express = require('express')
 // 实例话一个 express 项目
 const app = express()
 
+// 配置模板资源目录
+app.set('views', './views')
+// 配置模板引擎
+app.set('view engine', 'ejs')
+// 让服务器能够识别今天文件 - filePath 文件路径 第一个参数可以忽略
+app.use('/filePath', express.static('filePath'))
+
 // 使用后就可以在 router 内解析 body 的内容 `req.body` 
 app.use(express.urlencoded({extended: false, limit: '100mb'}))
 app.use(express.json(limit: '100mb'))

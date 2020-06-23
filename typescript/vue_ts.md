@@ -129,3 +129,26 @@
         }
     }
     ```
+
+##### 在vue内使用第三方库 无法识别问题
+* 在项目 src 目录下添加 shims-vue.d.ts 文件
+```ts
+declare module '*.vue' {
+  import Vue from 'vue'
+  export default Vue
+}
+
+declare module 'vue-particles'
+declare module 'md5'
+```
+
+##### 扩展对象 window
+```ts
+declare global {
+    interface Window {
+        // 扩展变量
+        // 总览 - 运行数据
+        initOperatingDataCharts: any
+    }
+}
+```
