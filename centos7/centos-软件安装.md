@@ -18,3 +18,8 @@
 + net-tools 网络工具包
     + `yum install -y net-tools`
         + `$ ifconfig` 查看本机 ip 
+
++ nodejs 
+    + `yum install -y nodejs`
+        + `node --version` 查看 node 版本
+        + `npm --version` 查看 npm 版本
