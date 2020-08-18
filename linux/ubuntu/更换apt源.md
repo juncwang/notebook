@@ -1,10 +1,12 @@
-##### 手动更改
+### 更换 apt 源
 * 用你熟悉的编辑器打开：`sudo /etc/apt/sources.list`
 
 * 替换默认的`http://archive.ubuntu.com/`
 * 为`mirrors.aliyun.com`
 
-* 最后更新 `sudo apt-get update`
+* 最后更新 
+* `sudo apt-get update`
+* `sudo apt-get updrade`
 
 ##### Ubuntu 14.04.5 配置如下
 
