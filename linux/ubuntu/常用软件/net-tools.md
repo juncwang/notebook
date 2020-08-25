@@ -1,5 +1,5 @@
 ### 网络相关工具
-* 安装方法 `apt install net-tools`
+* 安装方法 `apt-get install net-tools`
 
 * `ifconfig [option]` 查看本机网卡
     * `ifconfig -a` 查看本机所有网卡

@@ -1,5 +1,5 @@
 ### ssh
-* 安装方法 `apt install openssh-server`
+* 安装方法 `apt-get install openssh-server`
 
 * 修改配置
 ```conf
