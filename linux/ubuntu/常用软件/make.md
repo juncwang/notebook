@@ -41,3 +41,22 @@ name = juncwang
 print:
     @echo curname: $(curname)
 ```
+
+* 自动匹配依赖
+```conf
+objects = main.o input.o calcu.o
+
+main : $(objects)
+    gcc -o main $(objects)
+
+# % 通配符 表示所有以.o .c 结尾的文件
+%.o : %.c
+    # $< 根据目标文件名称进行匹配
+    gcc -c $<
+
+# 申明 clean 为伪目标 下面的 clean 就算有对应文件 也会执行下面的命令
+.PHONY: clean
+# 如果没有申明 phony 那么有 clean 文件时 clean 将不执行
+clean: 
+    rm *.o
+```
